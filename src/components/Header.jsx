@@ -34,6 +34,7 @@ const Header = () => {
         },
         { title: "Content Writing", href: "/content-writing-company-jaipur" },
         { title: "Video Editing", href: "/video-editing-company-jaipur" },
+         { title: "Ecommerce Listing", href: "/ecommerce-listing-service-jaipur" },
       ],
     },
     { title: "Careers", href: "/career" },
