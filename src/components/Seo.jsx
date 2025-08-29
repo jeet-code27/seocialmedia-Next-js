@@ -31,7 +31,7 @@ const Seo = () => {
   const faqs = [
     {
       question: "What makes SEOcial Media Solutions the best SEO company in Jaipur?",
-      answer: "We stand out as the best SEO company in Jaipur through our proven R.A.P.I.D approach, data-driven strategies, and 98% client satisfaction rate. Our team combines deep industry expertise with cutting-edge SEO techniques, delivering measurable results across multiple business domains. We provide transparent reporting, customized solutions, and maintain long-term partnerships focused on sustainable growth rather than quick fixes."
+      answer: "We stand out as the best SEO company in Jaipur through our proven R.A.P.I.D. approach, data-driven strategies, and 98% client satisfaction rate. Our team combines deep industry expertise with cutting-edge SEO techniques, delivering measurable results across multiple business domains. We provide transparent reporting, customized solutions, and maintain long-term partnerships focused on sustainable growth rather than quick fixes."
     },
     {
       question: "How long does it take to see results from your SEO services?",
@@ -369,7 +369,7 @@ const Seo = () => {
           <div className="py-24">
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
-                Our R.A.P.I.D Approach
+                Our R.A.P.I.D. Approach
               </h2>
               <p className="text-xl text-gray-600">A proven process for achieving search success</p>
             </div>

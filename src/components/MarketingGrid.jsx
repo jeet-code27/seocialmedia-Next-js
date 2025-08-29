@@ -20,7 +20,7 @@ const MarketingGrid = () => {
           expandedText: "We take the time to understand your industry, competitors, and target audience to create a marketing plan that helps you stand out and stay ahead."
         },
         {
-          title: "99.9% Client Retention – Because We Deliver",
+          title: "95% Client Retention – Because We Deliver",
           description: "Our clients stay with us because we focus on results, not just promises. We believe in building long-term partnerships with honesty, transparency, and success.",
           expandedText: "From startups to established brands, we've helped businesses grow exponentially through data-backed strategies and continuous optimization."
         },

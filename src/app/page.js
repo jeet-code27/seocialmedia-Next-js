@@ -1,376 +1,300 @@
-'use client'
-import React, { useState, useEffect, useRef } from "react";
-import Head from "next/head";
-import { motion } from "framer-motion";
-import { TypeAnimation } from "react-type-animation";
-import { Sparkles } from "lucide-react";
-import Link from "next/link";
+import { Metadata } from 'next';
+import HomePage from "@/components/Home";
 
-
-import ProductServicesPage from "@/components/ProductServicesPage";
-import ServicesCarousel from "@/components/ServicesCarousel";
-import GoogleMap from "@/components/GoogleMap";
-// export const metadata = {
-//   title: "Best Pharmaceutical Company in Jaipur - M Organics",
-//   description:
-//     "M Organics is a leading pharmaceutical company in Jaipur, Rajasthan, offering high-quality pharmaceutical products and healthcare solutions. Contact us at +91 99826 03336.",
-//   keywords: [
-//     "pharmaceutical company Jaipur",
-//     "best pharma company Rajasthan",
-//     "M Organics",
-//     "pharmaceutical products",
-//     "healthcare solutions",
-//     "pharma manufacturers Jaipur",
-//   ],
-//   authors: [{ name: "M Organics" }],
-//   openGraph: {
-//     title: "Best Pharmaceutical Company in Jaipur - M Organics",
-//     description:
-//       "M Organics is a leading pharmaceutical company in Jaipur, Rajasthan, offering high-quality pharmaceutical products and healthcare solutions.",
-//     url: "https://morganics.in/",
-//     siteName: "M Organics",
-//     images: [
-//       {
-//         url: "https://morganics.in/images/og-image.jpg",
-//         width: 800,
-//         height: 600,
-//         alt: "M Organics Pharmaceutical Company",
-//       },
-//     ],
-//     locale: "en_IN",
-//     type: "website",
-//   },
-//   twitter: {
-//     card: "summary_large_image",
-//     title: "Best Pharmaceutical Company in Jaipur - M Organics",
-//     description:
-//       "Leading pharma company in Jaipur providing quality healthcare solutions",
-//     images: ["https://morganics.in/images/twitter-card.jpg"],
-//   },
-//   alternates: {
-//     canonical: "https://morganics.in/",
-//   },
-//   metadataBase: new URL("https://morganics.in/"),
-//   robots: {
-//     index: true,
-//     follow: true,
-//     nocache: false,
-//     googleBot: {
-//       index: true,
-//       follow: true,
-//       noimageindex: false,
-//       "max-video-preview": -1,
-//       "max-image-preview": "large",
-//       "max-snippet": -1,
-//     },
-//   },
-// };
-// ✅ Background Component
-const HeroBackground = () => (
-  <div className="absolute inset-0 -z-10 bg-slate-950 overflow-hidden">
-    <motion.div
-      className="absolute inset-0  bg-[#101340] from-slate-950 via-blue-950 to-slate-900"
-      animate={{
-        backgroundPosition: ["0% 0%", "100% 100%"],
-      }}
-      transition={{
-        duration: 20,
-        repeat: Infinity,
-        repeatType: "reverse",
-      }}
-    />
-  </div>
-);
-
-// ✅ Wave Component
-const WaveBottom = () => (
-  <div className="absolute bottom-0 left-0 right-0">
-    <svg className="w-full" viewBox="0 0 1440 100" preserveAspectRatio="none">
-      <defs>
-        <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style={{ stopColor: "#f9fafb", stopOpacity: 1 }} />
-          <stop
-            offset="100%"
-            style={{ stopColor: "#f3f4f6", stopOpacity: 1 }}
-          />
-        </linearGradient>
-      </defs>
-      <path
-        d="M0,50 C150,20 350,0 500,15 C650,30 800,70 1000,80 C1200,90 1320,70 1440,40 L1440,100 L0,100 Z"
-        fill="url(#gradient1)"
-      />
-    </svg>
-  </div>
-);
-
-// ✅ YouTube Player Component (unchanged, just works in Next)
-const YouTubeVideo = ({ videoId }) => {
-  const [videoLoaded, setVideoLoaded] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [apiLoaded, setApiLoaded] = useState(false);
-  const playerRef = useRef(null);
-  const containerRef = useRef(null);
-
-  useEffect(() => {
-    if (window.YT) {
-      setApiLoaded(true);
-      return;
-    }
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.body.appendChild(tag);
-    window.onYouTubeIframeAPIReady = () => setApiLoaded(true);
-
-    return () => {
-      window.onYouTubeIframeAPIReady = null;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!apiLoaded || !containerRef.current) return;
-
-    const playerId = `youtube-player-${Math.random()
-      .toString(36)
-      .substr(2, 9)}`;
-    containerRef.current.id = playerId;
-
-    if (playerRef.current) playerRef.current.destroy();
-
-    playerRef.current = new window.YT.Player(playerId, {
-      videoId,
-      playerVars: {
-        autoplay: 1,
-        mute: 1,
-        controls: 0,
-        rel: 0,
-        modestbranding: 1,
-        loop: 1,
-        playlist: videoId,
+export const metadata ={
+  title: "Best Digital Marketing Agency in Jaipur - SEOcial Media Solutions",
+  description: "Leading digital marketing agency in Jaipur offering comprehensive SEO, social media marketing, PPC advertising, web development, and content marketing services. Boost your online presence with proven strategies and measurable results.",
+  keywords: [
+    "digital marketing agency Jaipur",
+    "SEO services Jaipur",
+    "social media marketing Jaipur",
+    "PPC advertising Jaipur",
+    "web development Jaipur",
+    "content marketing Jaipur",
+    "online marketing Rajasthan",
+    "digital marketing company Jaipur",
+    "search engine optimization Jaipur",
+    "Google ads management Jaipur",
+    "Facebook marketing Jaipur",
+    "Instagram marketing Jaipur",
+    "website design Jaipur",
+    "local SEO Jaipur",
+    "e-commerce marketing Jaipur"
+  ],
+  authors: [{ name: "SEOcial Media Solutions" }],
+  creator: "SEOcial Media Solutions",
+  publisher: "SEOcial Media Solutions",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL('https://seocialmedia.in'), // Replace with your actual domain
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: "Best Digital Marketing Agency in Jaipur - SEOcial Media Solutions",
+    description: "Transform your business with Jaipur's top-rated digital marketing agency. Expert SEO, social media marketing, PPC campaigns, and web development services delivering real ROI for local and national businesses.",
+    url: 'https://seocialmedia.in', // Replace with your actual domain
+    siteName: 'SEOcial Media Solutions',
+    type: 'website',
+    locale: 'en_IN',
+    images: [
+      {
+        url: '/og-image.jpg', // Add your Open Graph image
+        width: 1200,
+        height: 630,
+        alt: 'SEOcial Media Solutions - Digital Marketing Agency Jaipur',
       },
-      events: {
-        onReady: (event) => {
-          event.target.playVideo();
-          setVideoLoaded(true);
-          setIsPlaying(true);
-        },
-      },
-    });
-
-    return () => {
-      if (playerRef.current) {
-        playerRef.current.destroy();
-        playerRef.current = null;
-      }
-    };
-  }, [apiLoaded, videoId]);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.8 }}
-      className="rounded-lg overflow-hidden shadow-2xl border border-white/10 relative"
-      style={{
-        width: "100%",
-        maxWidth: "560px",
-        aspectRatio: "16/9",
-        background: "rgba(0,0,0,0.2)",
-      }}
-    >
-      <div ref={containerRef} className="w-full h-full"></div>
-    </motion.div>
-  );
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Best Digital Marketing Agency in Jaipur - SEOcial Media Solutions",
+    description: "Expert digital marketing services in Jaipur including SEO, social media marketing, PPC, and web development. Drive growth with data-driven strategies.",
+    images: ['/twitter-image.jpg'], // Add your Twitter card image
+    creator: '@seocialmedia', // Replace with your Twitter handle
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  category: 'Digital Marketing',
+  classification: 'Business',
+  referrer: 'origin-when-cross-origin',
+  applicationName: 'SEOcial Media Solutions',
+  generator: 'Next.js',
+  abstract: "Professional digital marketing agency in Jaipur specializing in SEO, social media marketing, PPC advertising, web development, and comprehensive online marketing solutions for businesses across Rajasthan and India.",
+  other: {
+    'geo.region': 'IN-RJ',
+    'geo.placename': 'Jaipur',
+    'geo.position': '26.9124;75.7873', // Jaipur coordinates
+    'ICBM': '26.9124, 75.7873',
+    'contact:phone_number': '+91-9461677122',
+    'contact:email': 'seocialmediasolutions@gmail.com', // Replace with actual email
+    'contact:address': 'Sagar, 1, opp. VS Medihub, Nirman Nagar, Ranisati Nagar, Jaipur, Rajasthan 302019',
+    'business:contact_data:street_address': 'Sagar, 1, opp. VS Medihub, Nirman Nagar',
+    'business:contact_data:locality': 'Ranisati Nagar',
+    'business:contact_data:region': 'Rajasthan',
+    'business:contact_data:postal_code': '302019',
+    'business:contact_data:country_name': 'India',
+    'dc.language': 'en',
+    'dc.title': 'Best Digital Marketing Agency in Jaipur - SEOcial Media Solutions',
+    'dc.creator': 'SEOcial Media Solutions',
+    'dc.subject': 'Digital Marketing, SEO, Social Media Marketing, PPC, Web Development',
+    'dc.description': 'Professional digital marketing services in Jaipur including SEO, social media marketing, PPC advertising, and web development',
+    'rating': 'General',
+    'distribution': 'Global',
+    'revisit-after': '7 days',
+    'language': 'English',
+    'coverage': 'Worldwide',
+    'target': 'all',
+    'HandheldFriendly': 'True',
+    'MobileOptimized': '320',
+    'apple-mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-status-bar-style': 'default',
+    'theme-color': '#000000', // Adjust to your brand color
+    'msapplication-navbutton-color': '#000000', // Adjust to your brand color
+    'apple-mobile-web-app-title': 'SEOcial Media Solutions',
+    'msapplication-TileColor': '#000000', // Adjust to your brand color
+  },
 };
 
-// ✅ Animated Title
-const AnimatedTitle = () => (
-  <div className="text-2xl sm:text-3xl md:text-4xl mb-6 lg:mb-12 font-bold leading-tight">
-    <div className="text-white whitespace-nowrap lg:text-5xl">
-      Transform Your
-    </div>
-    <div className="text-white whitespace-nowrap pb-2 lg:text-5xl">
-      Digital Presence with
-    </div>
-    <div className="w-full overflow-hidden">
-      <TypeAnimation
-        sequence={[
-          "Website Development",
-          1500,
-          "SEO Optimization",
-          1500,
-          "Google Ads",
-          1500,
-          "Social Media Marketing",
-          1500,
-          "Content Writing",
-          1500,
-        ]}
-        wrapper="div"
-        speed={50}
-        repeat={Infinity}
-        className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-yellow-400 text-[1.5rem] sm:text-[1.75rem] md:text-[2rem] lg:text-[2.5rem] pb-4 whitespace-nowrap"
-      />
-    </div>
-  </div>
-);
-
-// ✅ Hero Section
-const HeroSection = () => {
-  const youtubeVideoId = "obyYIaHxkSo";
-
-  return (
-    <section className="relative min-h-screen">
-      <HeroBackground />
-      <div className="relative container mx-auto px-4">
-        <motion.nav
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="py-6"
-        >
-          <div className="flex justify-between items-center">
-            <div className="text-xl sm:text-2xl font-bold text-white">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-yellow-400">
-                SEO
-              </span>
-              cial Media Solutions
-            </div>
-          </div>
-        </motion.nav>
-
-        <div className="flex flex-col lg:flex-row items-center py-8 gap-12">
-          <div className="lg:w-1/2 space-y-6 sm:space-y-8">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center px-3 sm:px-4 py-1.5 sm:py-2 bg-white/5 backdrop-blur-sm rounded-full space-x-2 border border-white/10"
-            >
-              <Sparkles className="h-4 w-4 text-yellow-400 animate-pulse" />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-yellow-400 text-sm sm:text-base font-semibold">
-                AI-Powered Digital Marketing Solutions
-              </span>
-            </motion.div>
-
-            <AnimatedTitle />
-
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="text-base sm:text-lg text-gray-300 max-w-xl"
-            >
-              Unlock the power of AI-driven marketing solutions that deliver
-              real results. Boost your online visibility and grow your business
-              with our cutting-edge platform.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-            >
-              <Link href="/contact">
-                <button className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2">
-                  <span>Get Started</span>
-                  <svg
-                    className="w-4 h-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </Link>
-            </motion.div>
-          </div>
-
-          <div className="lg:w-1/2 flex justify-center items-center">
-            <YouTubeVideo videoId={youtubeVideoId} />
-          </div>
-        </div>
-      </div>
-      <WaveBottom />
-    </section>
-  );
-};
-
-// ✅ Home Page with Head
-const Home = () => {
-  const schemaData = {
+// JSON-LD Structured Data for better SEO
+export function generateStructuredData() {
+  return {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "SEOcial Media Solutions",
-    url: "https://www.seocialmedia.in/",
-    logo: "https://www.seocialmedia.in/images/company-logo.jpeg",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://seocialmedia.in/#organization",
+        "name": "SEOcial Media Solutions",
+        "alternateName": "SEOcial Media",
+        "url": "https://seocialmedia.in",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://seocialmedia.in/logo.png" // Replace with actual logo URL
+        },
+        "sameAs": [
+          "https://www.facebook.com/profile.php?id=61564390163701", // Replace with actual social profiles
+          "https://www.instagram.com/seocialmediasolutions/",
+          "https://www.linkedin.com/company/seocial-media-solution/",
+          "https://twitter.com/seocialmedia"
+        ],
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "telephone": "+91-9461677122",
+            "contactType": "customer service",
+            "areaServed": "IN",
+            "availableLanguage": ["English", "Hindi"]
+          },
+          {
+            "@type": "ContactPoint",
+            "telephone": "+91-8949342270",
+            "contactType": "sales",
+            "areaServed": "IN",
+            "availableLanguage": ["English", "Hindi"]
+          }
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Sagar, 1, opp. VS Medihub, Nirman Nagar",
+          "addressLocality": "Ranisati Nagar",
+          "addressRegion": "Rajasthan",
+          "postalCode": "302019",
+          "addressCountry": "IN"
+        }
+      },
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://seocialmedia.in/#localbusiness",
+        "name": "SEOcial Media Solutions",
+        "image": "https://seocialmedia.in/business-image.jpg",
+        "telephone": "+91-9461677122",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Sagar, 1, opp. VS Medihub, Nirman Nagar",
+          "addressLocality": "Ranisati Nagar",
+          "addressRegion": "Rajasthan",
+          "postalCode": "302019",
+          "addressCountry": "IN"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "26.9124",
+          "longitude": "75.7873"
+        },
+        "url": "https://seocialmedia.in",
+        "priceRange": "₹₹",
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday"
+            ],
+            "opens": "09:00",
+            "closes": "18:00"
+          }
+        ],
+        "servesCuisine": null,
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.8",
+          "reviewCount": "150"
+        }
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://seocialmedia.in/#service",
+        "name": "Digital Marketing Services",
+        "provider": {
+          "@id": "https://seocialmedia.in/#organization"
+        },
+        "areaServed": {
+          "@type": "State",
+          "name": "Rajasthan"
+        },
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Digital Marketing Services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Search Engine Optimization (SEO)",
+                "description": "Comprehensive SEO services to improve website rankings and organic traffic"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Social Media Marketing",
+                "description": "Strategic social media campaigns across Facebook, Instagram, LinkedIn, and Twitter"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Pay-Per-Click (PPC) Advertising",
+                "description": "Google Ads and social media advertising management for maximum ROI"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Web Development",
+                "description": "Custom website design and development with responsive, mobile-friendly designs"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Content Marketing",
+                "description": "Engaging content creation and marketing strategies to attract and retain customers"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://seocialmedia.in/om/#website",
+        "url": "https://seocialmedia.in",
+        "name": "SEOcial Media Solutions",
+        "description": "Best Digital Marketing Agency in Jaipur offering SEO, social media marketing, PPC, web development and content marketing services",
+        "publisher": {
+          "@id": "https://seocialmedia.in/#organization"
+        },
+        "potentialAction": [
+          {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://seocialmedia.in/search?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        ],
+        "inLanguage": "en-IN"
+      }
+    ]
   };
+}
+
+export default function MainHomePage() {
+  const structuredData = generateStructuredData();
 
   return (
     <>
-      <Head>
-        {/* Page Title */}
-        <title>Best Digital Marketing Company | SEOcial Media Solutions</title>
-
-        {/* Meta Tags */}
-        <meta
-          name="description"
-          content="SEOcial Media Solutions is a top digital marketing agency in Jaipur. We offer expert SEO, social media, and web development services to help your business grow."
-        />
-        <meta
-          name="keywords"
-          content="Digital marketing Jaipur, SEO company, Social media marketing, Web development, Online promotion Jaipur"
-        />
-        <meta name="author" content="SEOcial Media Solutions" />
-        <meta name="publisher" content="SEOcial Media Solutions" />
-
-        {/* Canonical URL */}
-        <link rel="canonical" href="https://seocialmedia.in" />
-
-        {/* Open Graph (Social Sharing) */}
-        <meta
-          property="og:title"
-          content="Best Digital Marketing Company | SEOcial Media Solutions"
-        />
-        <meta
-          property="og:description"
-          content="SEOcial Media Solutions is a top digital marketing agency in Jaipur. We offer expert SEO, social media, and web development services to help your business grow."
-        />
-        <meta property="og:url" content="https://seocialmedia.in" />
-        <meta property="og:site_name" content="SEOcial Media Solutions" />
-        <meta
-          property="og:image"
-          content="https://seocialmedia.in/images/og-home.jpg"
-        />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta
-          property="og:image:alt"
-          content="SEOcial Media Solutions - Digital Marketing Agency in Jaipur"
-        />
-        <meta property="og:locale" content="en_IN" />
-        <meta property="og:type" content="website" />
-
-        {/* Other Meta Tags */}
-        <meta name="robots" content="index, follow" />
-        {/* Note: googleBot specific tags are not typically set directly with <Head> */}
-
-        {/* Schema Markup for SEO */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
-        />
-      </Head>
-      <div className="relative">
-        <h1 className="hidden">Best Digital Marketing Agency in Jaipur</h1>
-        <HeroSection />
-        <ProductServicesPage />
-        <ServicesCarousel />
-        <GoogleMap />
-      </div>
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData)
+        }}
+      />
+      <HomePage />
     </>
   );
-};
-
-export default Home;
+}
