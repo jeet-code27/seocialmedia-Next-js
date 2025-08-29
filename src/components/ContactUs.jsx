@@ -66,7 +66,7 @@ const ContactForm = () => {
       icon: MapPin,
       title: "Location",
       details:
-        "1, Sagar, Shiv Shakti Nagar, Nirman Nagar, Jaipur, Rajasthan, 302019",
+        "Sagar, 1, opp. VS Medihub, Nirman Nagar, Ranisati Nagar, Jaipur, Rajasthan 302019",
       gradient: "from-green-500 to-emerald-500",
     },
   ];

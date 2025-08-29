@@ -135,7 +135,7 @@ const Footer = () => {
               <div className="flex items-start">
                 <MapPin className="w-5 h-5 mr-3 mt-1 flex-shrink-0" />
                 <p className="text-sm">
-                  1, Sagar, Shiv Shakti Nagar, Nirman Nagar, Jaipur, Rajasthan, 302019
+                 Sagar, 1, opp. VS Medihub, Nirman Nagar, Ranisati Nagar, Jaipur, Rajasthan 302019
                 </p>
               </div>
               <div className="flex items-center">
