@@ -41,7 +41,6 @@ export default async function sitemap() {
 
   // Dynamic blog posts
   const blogPosts = [
-
     "/blog/best-digital-marketing-agency-jaipur-seocial-media-solutions",
     "/blog/best-digital-marketing-company-jaipur-seocial-media",
     "/blog/best-google-ads-company-jaipur-seocial-media",
@@ -54,7 +53,8 @@ export default async function sitemap() {
     "/blog/seo-web-development-agency-jaipur",
     "/blog/top-10-digital-marketing-agencies-jaipur-seocial-media-solutions",
     "/blog/seo-company-jaipur",
-    "/blog/top-app-development-company-jaipur-seocial-media"
+    "/blog/top-app-development-company-jaipur-seocial-media",
+    "/blog/top-10-website-development-companies-jaipur-2025",
   ].map((post) => ({
     url: `${URL}${post}`,
     lastModified: new Date().toISOString(),
@@ -62,7 +62,8 @@ export default async function sitemap() {
     priority: 0.8,
   }));
 
-  return [...routes, ...blogPosts];``
+  return [...routes, ...blogPosts];
+  ``;
 }
 
 // Helper functions for SEO optimization
