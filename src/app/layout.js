@@ -7,6 +7,12 @@ import NeonCursor from "@/components/NeonCursor";
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <meta
+          name="facebook-domain-verification"
+          content="2koju9tvodnexe6azl5ruldzrfvow5"
+        />
+      </head>
       <body className={` antialiased min-h-screen`}>
         <Header />
         {children}
