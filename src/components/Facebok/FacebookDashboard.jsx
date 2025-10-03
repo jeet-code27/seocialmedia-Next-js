@@ -45,8 +45,8 @@ function FacebookIntegrationContent() {
 
   // Mock auth token - replace this with your actual auth token
   const authToken =
-    tokenFromQuery ||
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YzUwZjljYWIwZDQ2NjUwZmZiOTQxNSIsImlhdCI6MTc1OTQ4MjgxMCwiZXhwIjoxNzYwMDg3NjEwfQ.e5dtK-szVQ_8u1IE1AF-p2MmCsATmKKTM140nsZ7aOI";
+    tokenFromQuery
+    // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YzUwZjljYWIwZDQ2NjUwZmZiOTQxNSIsImlhdCI6MTc1OTQ4MjgxMCwiZXhwIjoxNzYwMDg3NjEwfQ.e5dtK-szVQ_8u1IE1AF-p2MmCsATmKKTM140nsZ7aOI";
 
   // API call helper with better error handling
   const apiCall = async (endpoint, method = "GET", body = null) => {
