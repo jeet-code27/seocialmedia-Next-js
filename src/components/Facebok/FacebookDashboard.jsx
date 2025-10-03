@@ -1,6 +1,6 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import {
   Facebook,
   Users,
@@ -19,7 +19,8 @@ import {
   Heart,
 } from "lucide-react";
 
-const FacebookIntegration = () => {
+// Component that uses useSearchParams - must be wrapped in Suspense
+function FacebookIntegrationContent() {
   const searchParams = useSearchParams();
   const tokenFromQuery = searchParams.get("token");
   const [connectionStatus, setConnectionStatus] = useState({
@@ -1070,6 +1071,20 @@ const FacebookIntegration = () => {
       </div>
     </div>
   );
-};
+}
 
-export default FacebookIntegration;
+// Main export component with Suspense boundary
+export default function FacebookIntegration() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <RefreshCw className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-4" />
+          <p className="text-gray-600">Loading Facebook integration...</p>
+        </div>
+      </div>
+    }>
+      <FacebookIntegrationContent />
+    </Suspense>
+  );
+}
