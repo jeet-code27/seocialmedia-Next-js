@@ -7,8 +7,8 @@ export const metadata = {
     "Looking for the best content writing services in Jaipur? SEOcial Media Solutions provides high-quality website content, blogs, SEO content, and marketing materials to help your business grow.",
   keywords:
     "top content writing company Jaipur, professional content writers Jaipur, SEO content writing Jaipur, website content services Jaipur, blog writing services Jaipur, marketing content Jaipur",
-  authors: [{ name: "SEOcial Media Solutions" }],
-  publisher: "SEOcial Media Solutions",
+  authors: [{ name: "Mudit Mathur" }],
+  publisher: "Mudit Mathur",
   robots: "index, follow",
   alternates: {
     canonical: "https://seocialmedia.in/top-content-writing-company-jaipur",

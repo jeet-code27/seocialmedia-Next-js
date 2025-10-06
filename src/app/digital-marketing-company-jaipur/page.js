@@ -6,8 +6,8 @@ export const metadata = {
     "Looking for the best website development company in Jaipur? SEOcial Media offers web design, SEO, content marketing, and full-scale digital solutions tailored to your business.",
   keywords:
     "best website development company in Jaipur, top digital marketing agency, SEO company Jaipur, social media marketing Jaipur, content writing services, Google Ads Jaipur, web design services, responsive websites, Jaipur web development, startup marketing solutions",
-  authors: [{ name: "SEOcial Media Solutions" }],
-  publisher: "SEOcial Media Solutions",
+  authors: [{ name: "Mudit Mathur" }],
+  publisher: "Mudit Mathur",
   robots: "index, follow",
   alternates: {
     canonical: "https://seocialmedia.in/digital-marketing-company-jaipur",

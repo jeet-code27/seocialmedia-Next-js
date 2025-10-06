@@ -6,8 +6,8 @@ export const metadata = {
     "Grow your business with SEOcial Media Solutions, the leading digital marketing agency in Ajmer. We provide SEO, social media marketing, PPC, content marketing, and web development services tailored for your brand.",
   keywords:
     "digital marketing services Ajmer, SEO company Ajmer, social media marketing Ajmer, PPC services Ajmer, content marketing Ajmer, website development Ajmer, online marketing Ajmer",
-  authors: [{ name: "SEOcial Media Solutions" }],
-  publisher: "SEOcial Media Solutions",
+  authors: [{ name: "Mudit Mathur" }],
+  publisher: "Mudit Mathur",
   robots: "index, follow",
   alternates: {
     canonical: "https://seocialmedia.in/digital-markting-services-ajmer",

@@ -6,8 +6,8 @@ export const metadata = {
     "Build your online presence with SEOcial Media Solutions, the leading web development company in Jaipur. We provide custom website design, responsive development, e-commerce solutions, and digital strategies to grow your business.",
   keywords:
     "web development company Jaipur, website design Jaipur, responsive websites Jaipur, e-commerce development Jaipur, SEOcial Media Solutions, web development services Jaipur",
-  authors: [{ name: "SEOcial Media Solutions" }],
-  publisher: "SEOcial Media Solutions",
+  authors: [{ name: "Mudit Mathur" }],
+  publisher: "Mudit Mathur",
   robots: "index, follow",
   alternates: {
     canonical: "https://seocialmedia.in/web-development-company-jaipur",

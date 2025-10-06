@@ -7,8 +7,8 @@ export const metadata = {
     "Build your online presence with SEOcial Media Solutions, the leading web development company in Ajmer. We provide custom website design, responsive development, e-commerce solutions, and digital strategies to grow your business.",
   keywords:
     "web development company Ajmer, website design Ajmer, responsive websites Ajmer, e-commerce development Ajmer, SEOcial Media Solutions, web development services Ajmer",
-  authors: [{ name: "SEOcial Media Solutions" }],
-  publisher: "SEOcial Media Solutions",
+  authors: [{ name: "Mudit Mathur" }],
+  publisher: "Mudit Mathur",
   robots: "index, follow",
   alternates: {
     canonical: "https://seocialmedia.in/web-development-company-ajmer",

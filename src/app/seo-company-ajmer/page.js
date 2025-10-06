@@ -7,8 +7,8 @@ export const metadata = {
     "Boost your online presence with SEOcial Media Solutions, the leading SEO company in Ajmer. We offer expert SEO services, including on-page, off-page, and local SEO to help your business rank higher in search results.",
   keywords:
     "SEO company Ajmer, SEO services Ajmer, local SEO Ajmer, on-page SEO Ajmer, off-page SEO Ajmer, digital marketing Ajmer, SEOcial Media Solutions",
-  authors: [{ name: "SEOcial Media Solutions" }],
-  publisher: "SEOcial Media Solutions",
+  authors: [{ name: "Mudit Mathur" }],
+  publisher: "Mudit Mathur",
   robots: "index, follow",
   alternates: {
     canonical: "https://seocialmedia.in/seo-company-ajmer",

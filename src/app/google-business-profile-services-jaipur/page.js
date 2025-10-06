@@ -7,8 +7,8 @@ export const metadata = {
     "Boost your local presence with SEOcial Media Solutions, offering expert Google Business Profile management in Jaipur. Optimize your listings, attract more customers, and enhance online visibility.",
   keywords:
     "Google Business Profile services Jaipur, Google My Business Jaipur, local SEO Jaipur, business listing management Jaipur, online visibility Jaipur, SEOcial Media Google Business Profile",
-  authors: [{ name: "SEOcial Media Solutions" }],
-  publisher: "SEOcial Media Solutions",
+  authors: [{ name: "Mudit Mathur" }],
+  publisher: "Mudit Mathur",
   robots: "index, follow",
   alternates: {
     canonical: "https://seocialmedia.in/google-business-profile-services-jaipur",

@@ -6,8 +6,8 @@ export const metadata = {
     "Get in touch with SEOcial Media, the leading website development and digital marketing company in Jaipur. Reach out for web design, SEO, and online marketing solutions tailored to your business.",
   keywords:
     "contact SEOcial Media, website development Jaipur contact, digital marketing agency Jaipur contact, SEO company Jaipur contact, social media marketing Jaipur contact, web design services Jaipur, startup marketing solutions contact",
-  authors: [{ name: "SEOcial Media Solutions" }],
-  publisher: "SEOcial Media Solutions",
+  authors: [{ name: "Mudit Mathur" }],
+  publisher: "Mudit Mathur",
   robots: "index, follow",
   alternates: {
     canonical: "https://seocialmedia.in/contact",

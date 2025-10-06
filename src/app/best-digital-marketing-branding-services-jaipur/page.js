@@ -8,8 +8,8 @@ export const metadata = {
     "Grow your business with our complete digital marketing and branding services in Jaipur. We offer social media management, SEO, paid ads, web design, and more.",
   keywords:
     "digital marketing services Jaipur, branding agency Jaipur, social media marketing Jaipur, SEO services Jaipur, content creation, paid ads management, website design Jaipur, Instagram marketing, Facebook ads Jaipur, video editing services",
-  authors: [{ name: "SEOcial Media Solutions" }],
-  publisher: "SEOcial Media Solutions",
+  authors: [{ name: "Mudit Mathur" }],
+  publisher: "Mudit Mathur",
   robots: "index, follow",
   alternates: {
     canonical: "https://seocialmedia.in/best-digital-marketing-branding-services-jaipur",

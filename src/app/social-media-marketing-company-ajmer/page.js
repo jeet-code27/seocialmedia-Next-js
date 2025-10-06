@@ -6,8 +6,8 @@ export const metadata = {
     "Grow your brand with SEOcial Media Solutions, the leading social media marketing company in Ajmer. We offer Facebook, Instagram, LinkedIn, and Twitter marketing services to boost engagement and drive sales.",
   keywords:
     "social media marketing company Ajmer, SMM services Ajmer, Facebook marketing Ajmer, Instagram marketing Ajmer, LinkedIn marketing Ajmer, Twitter marketing Ajmer, digital marketing Ajmer",
-  authors: [{ name: "SEOcial Media Solutions" }],
-  publisher: "SEOcial Media Solutions",
+  authors: [{ name: "Mudit Mathur" }],
+  publisher: "Mudit Mathur",
   robots: "index, follow",
   alternates: {
     canonical: "https://seocialmedia.in/social-media-marketing-company-ajmer",

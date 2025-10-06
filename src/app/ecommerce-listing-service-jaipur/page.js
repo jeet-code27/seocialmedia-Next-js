@@ -8,8 +8,8 @@ export const metadata = {
     "Expand your business with our multi-platform e-commerce listing service. Get your products listed on Amazon, Flipkart, eBay, Etsy, Myntra, Meesho, and 50+ marketplaces with SEO-optimized listings and performance management.",
   keywords:
     "e-commerce listing service, multi-platform product listing, Amazon product listing, Flipkart listing service, marketplace SEO, eBay listing, Myntra product listing, Shopify listing service, Meesho listing, IndiaMart listing",
-  authors: [{ name: "SEOcial Media Solutions" }],
-  publisher: "SEOcial Media Solutions",
+  authors: [{ name: "Mudit Mathur" }],
+  publisher: "Mudit Mathur",
   robots: "index, follow",
   alternates: {
     canonical: "https://seocialmedia.in/ecommerce-listing-service-jaipur",

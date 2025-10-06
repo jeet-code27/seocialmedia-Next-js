@@ -7,8 +7,8 @@ export const metadata = {
     "Bring your visuals to life with SEOcial Media Solutions, the top video editing company in Jaipur. We provide professional video editing, post-production, motion graphics, and promotional video services to enhance your brand.",
   keywords:
     "top video editing company Jaipur, professional video editors Jaipur, video post-production Jaipur, motion graphics Jaipur, promotional video services Jaipur, SEOcial Media Solutions",
-  authors: [{ name: "SEOcial Media Solutions" }],
-  publisher: "SEOcial Media Solutions",
+  authors: [{ name: "Mudit Mathur" }],
+  publisher: "Mudit Mathur",
   robots: "index, follow",
   alternates: {
     canonical: "https://seocialmedia.in/top-video-editing-company-jaipur",

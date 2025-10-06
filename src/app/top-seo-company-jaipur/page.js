@@ -7,8 +7,8 @@ export const metadata = {
     "Rank higher on Google with SEOcial Media Solutions, the top SEO company in Jaipur. We provide expert on-page, off-page, and local SEO services to boost your online visibility and grow your business.",
   keywords:
     "top SEO company Jaipur, SEO services Jaipur, local SEO Jaipur, on-page SEO Jaipur, off-page SEO Jaipur, digital marketing Jaipur, SEOcial Media Solutions",
-  authors: [{ name: "SEOcial Media Solutions" }],
-  publisher: "SEOcial Media Solutions",
+  authors: [{ name: "Mudit Mathur" }],
+  publisher: "Mudit Mathur",
   robots: "index, follow",
   alternates: {
     canonical: "https://seocialmedia.in/top-seo-company-jaipur",

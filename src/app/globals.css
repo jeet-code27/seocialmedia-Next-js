@@ -1,8 +1,11 @@
 @import "tailwindcss";
 
-.back{
-    background-color: #ff99ac;
-    background-image: radial-gradient(at 98% 65%, #f7ae6e 0, transparent 50%), radial-gradient(at 53% 39%, #9057e5 0, transparent 50%), radial-gradient(at 96% 88%, #f39682 0, transparent 50%), radial-gradient(at 62% 6%, #6cbfe5 0, transparent 50%), radial-gradient(at 56% 25%, #a5e9a7 0, transparent 50%), radial-gradient(at 86% 80%, #eac376 0, transparent 50%), radial-gradient(at 67% 90%, #6469fc 0, transparent 50%);
+html {
+  scroll-behavior: smooth;
+}
+.back {
+  background-color: #ff99ac;
+  background-image: radial-gradient(at 98% 65%, #f7ae6e 0, transparent 50%), radial-gradient(at 53% 39%, #9057e5 0, transparent 50%), radial-gradient(at 96% 88%, #f39682 0, transparent 50%), radial-gradient(at 62% 6%, #6cbfe5 0, transparent 50%), radial-gradient(at 56% 25%, #a5e9a7 0, transparent 50%), radial-gradient(at 86% 80%, #eac376 0, transparent 50%), radial-gradient(at 67% 90%, #6469fc 0, transparent 50%);
 }
 .App {
   text-align: center;
@@ -38,6 +41,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

@@ -6,8 +6,8 @@ export const metadata = {
     "Drive targeted traffic and boost sales with SEOcial Media Solutions, the leading Google Ads company in Jaipur. We offer expert PPC campaign management, keyword research, and ROI-focused strategies for your business.",
   keywords:
     "Google Ads company Jaipur, PPC services Jaipur, paid advertising Jaipur, digital marketing Jaipur, SEM services Jaipur, online advertising Jaipur, SEOcial Media Google Ads",
-  authors: [{ name: "SEOcial Media Solutions" }],
-  publisher: "SEOcial Media Solutions",
+  authors: [{ name: "Mudit Mathur" }],
+  publisher: "Mudit Mathur",
   robots: "index, follow",
   alternates: {
     canonical: "https://seocialmedia.in/google-ads-company-jaipur",

@@ -140,7 +140,7 @@ const AboutUs = () => {
             media, and strategic online marketing solutions.
           </p>
         </motion.div>
-        {/* <Founders /> */}
+
         {/* Mission */}
         <div id="mission" className="mt-24">
           <motion.div
@@ -290,7 +290,7 @@ const AboutUs = () => {
             ))}
           </div>
         </motion.div>
-
+        <Founders />
         {/* Promo Video */}
         <motion.div
           variants={containerVariants}

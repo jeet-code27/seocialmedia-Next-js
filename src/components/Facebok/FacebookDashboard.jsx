@@ -2,21 +2,38 @@
 import { useSearchParams } from "next/navigation";
 import React, { useState, useEffect, Suspense } from "react";
 import {
+  PieChart,
+  Pie,
+  Cell,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  Area,
+  AreaChart,
+} from "recharts";
+import {
+  BarChart3,
+  AlertCircle,
+  RefreshCw,
+  Heart,
+  Calendar,
+  TrendingUp,
+  TrendingDown,
+  Activity,
+  Eye,
+  MessageCircle,
+  Share2,
+  ChevronRight,
   Facebook,
   Users,
-  BarChart3,
   FileText,
   Unlink,
   CheckCircle,
-  AlertCircle,
-  RefreshCw,
-  TrendingUp,
-  Eye,
-  ThumbsUp,
-  Calendar,
-  MessageSquare,
-  Share2,
-  Heart,
 } from "lucide-react";
 
 // Component that uses useSearchParams - must be wrapped in Suspense
@@ -39,14 +56,15 @@ function FacebookIntegrationContent() {
   const [insightsLoading, setInsightsLoading] = useState(false);
   const [postsLoading, setPostsLoading] = useState(false);
   const [error, setError] = useState("");
-
+  const [expandedMetric, setExpandedMetric] = useState(null);
+   const [chartType, setChartType] = useState("pie");
   // Your backend API base URL
   const API_BASE = "https://api.seocialmedia.in/api";
 
   // Mock auth token - replace this with your actual auth token
   const authToken =
-    tokenFromQuery
-    // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YzUwZjljYWIwZDQ2NjUwZmZiOTQxNSIsImlhdCI6MTc1OTQ4MjgxMCwiZXhwIjoxNzYwMDg3NjEwfQ.e5dtK-szVQ_8u1IE1AF-p2MmCsATmKKTM140nsZ7aOI";
+    tokenFromQuery ||
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YzUwZjljYWIwZDQ2NjUwZmZiOTQxNSIsImlhdCI6MTc1OTQ4MjgxMCwiZXhwIjoxNzYwMDg3NjEwfQ.e5dtK-szVQ_8u1IE1AF-p2MmCsATmKKTM140nsZ7aOI";
 
   // API call helper with better error handling
   const apiCall = async (endpoint, method = "GET", body = null) => {
@@ -428,21 +446,30 @@ function FacebookIntegrationContent() {
     return text.substring(0, maxLength) + "...";
   };
 
-  // Render page insights
   const renderInsights = () => {
+   
+    const data = [
+      { name: "Followers", value: pageInsights.pageInfo.followers_count || 0 },
+      { name: "Fans", value: pageInsights.pageInfo.fan_count || 0 },
+      { name: "Days", value: pageInsights.period || 28 },
+      { name: "Metrics", value: pageInsights.debug?.successfulMetrics || 0 },
+    ];
+
+    const COLORS = ["#3b82f6", "#ef4444", "#10b981", "#f59e0b"];
+
     if (!pageInsights) return null;
 
     if (pageInsights.error) {
       return (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-4 mb-4">
           <h2 className="text-xl font-bold text-gray-900 mb-4">
             Page Insights
           </h2>
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-            <div className="flex items-center">
-              <AlertCircle className="w-5 h-5 text-red-600 mr-2" />
+          <div className="bg-gradient-to-r from-red-50 to-rose-50 border border-red-200 rounded-xl p-4">
+            <div className="flex items-start">
+              <AlertCircle className="w-5 h-5 text-red-600 mr-3 mt-0.5 flex-shrink-0" />
               <div>
-                <h3 className="font-medium text-red-900">
+                <h3 className="font-semibold text-red-900">
                   Unable to load insights
                 </h3>
                 <p className="text-red-700 text-sm mt-1">
@@ -456,190 +483,338 @@ function FacebookIntegrationContent() {
     }
 
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-gray-900">Page Insights</h2>
-          {insightsLoading && (
-            <RefreshCw className="w-5 h-5 animate-spin text-blue-600" />
-          )}
+      <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-lg border border-gray-200 mb-4">
+        {/* Header - Mobile Optimized */}
+        <div className="p-4 border-b border-gray-200">
+          <div className="flex items-center justify-between mb-2">
+            <h2 className="text-2xl font-bold text-gray-900">Insights</h2>
+            {insightsLoading && (
+              <div className="bg-blue-50 p-2 rounded-lg">
+                <RefreshCw className="w-5 h-5 animate-spin text-blue-600" />
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Page Info Card */}
         {pageInsights.pageInfo && (
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 mb-6 border border-blue-200">
+          <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-4 text-white rounded-2xl">
+            <h2 className="text-center text-lg font-bold truncate pr-2 m-5">
+              Performance Analytics
+            </h2>
+
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-blue-900">
+              <h3 className="text-lg font-bold truncate pr-2">
                 {pageInsights.pageInfo.name}
               </h3>
-              <span className="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full">
+              <span className="bg-white/20 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full font-medium whitespace-nowrap">
                 {pageInsights.pageInfo.category || "Business"}
               </span>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="text-center">
-                <Users className="w-6 h-6 text-blue-600 mx-auto mb-2" />
-                <p className="text-blue-900 text-2xl font-bold">
-                  {pageInsights.pageInfo.followers_count?.toLocaleString() ||
-                    "N/A"}
+           {/* Chart Type Toggle */}
+<div className="mb-4 flex justify-end items-center space-x-2">
+  <span className="text-white text-sm">Pie</span>
+  <button
+    onClick={() => setChartType(chartType === "pie" ? "bar" : "pie")}
+    className={`w-12 h-6 rounded-full p-1 transition-colors duration-300 ${
+      chartType === "pie" ? "bg-green-500" : "bg-gray-400"
+    }`}
+  >
+    <div
+      className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ${
+        chartType === "pie" ? "translate-x-0" : "translate-x-6"
+      }`}
+    />
+  </button>
+  <span className="text-white text-sm">Bar</span>
+</div>
+
+            {/* Render Chart */}
+            <div style={{ width: "100%", height: 200 }}>
+              <ResponsiveContainer>
+                {chartType === "pie" ? (
+                  <PieChart>
+                    <Pie
+                      data={data}
+                      dataKey="value"
+                      nameKey="name"
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={70}
+                      fill="#8884d8"
+                      label
+                    >
+                      {data.map((entry, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                        />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                  </PieChart>
+                ) : (
+                  <BarChart
+                    data={data}
+                    margin={{ top: 20, right: 20, left: 0, bottom: 5 }}
+                  >
+                    <XAxis dataKey="name" tick={{ fill: "white" }} />
+                    <YAxis tick={{ fill: "white" }} />
+                    <Tooltip />
+                    <Bar dataKey="value">
+                      {data.map((entry, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                        />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                )}
+              </ResponsiveContainer>
+            </div>
+
+            {/* Optional compact stats grid */}
+            <div className="grid grid-cols-2 gap-3 mt-4">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center">
+                <Users className="w-6 h-6 mx-auto mb-2 opacity-90 text-blue-100" />
+                <p className="text-2xl font-bold mb-0.5">
+                  {(pageInsights.pageInfo.followers_count / 1000).toFixed(1)}K
                 </p>
-                <p className="text-blue-700 text-sm font-medium">Followers</p>
+                <p className="text-blue-100 text-xs font-medium">Followers</p>
               </div>
-              <div className="text-center">
-                <Heart className="w-6 h-6 text-pink-600 mx-auto mb-2" />
-                <p className="text-blue-900 text-2xl font-bold">
-                  {pageInsights.pageInfo.fan_count?.toLocaleString() || "N/A"}
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center">
+                <Heart className="w-6 h-6 mx-auto mb-2 opacity-90 text-red-500" />
+                <p className="text-2xl font-bold mb-0.5">
+                  {(pageInsights.pageInfo.fan_count / 1000).toFixed(1)}K
                 </p>
-                <p className="text-blue-700 text-sm font-medium">Fans</p>
+                <p className="text-blue-100 text-xs font-medium">Fans</p>
               </div>
-              <div className="text-center">
-                <Calendar className="w-6 h-6 text-green-600 mx-auto mb-2" />
-                <p className="text-blue-900 text-lg font-bold">
-                  {pageInsights.period || "28"} days
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center">
+                <Calendar className="w-6 h-6 mx-auto mb-2 opacity-90" />
+                <p className="text-2xl font-bold mb-0.5">
+                  {pageInsights.period || 28}
                 </p>
-                <p className="text-blue-700 text-sm font-medium">Period</p>
+                <p className="text-blue-100 text-xs font-medium">Days</p>
               </div>
-              <div className="text-center">
-                <BarChart3 className="w-6 h-6 text-purple-600 mx-auto mb-2" />
-                <p className="text-blue-900 text-lg font-bold">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center">
+                <BarChart3 className="w-6 h-6 mx-auto mb-2 opacity-90 text-green-400" />
+                <p className="text-2xl font-bold mb-0.5">
                   {pageInsights.debug?.successfulMetrics || 0}
                 </p>
-                <p className="text-blue-700 text-sm font-medium">Metrics</p>
+                <p className="text-blue-100 text-xs font-medium">Metrics</p>
               </div>
             </div>
           </div>
         )}
 
-        {/* Insights Metrics Grid */}
+        {/* Mobile Metrics List */}
         {pageInsights.insights &&
         Object.keys(pageInsights.insights).length > 0 ? (
-          <div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-4">
-              Performance Metrics
-            </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="p-0.5">
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="text-lg font-bold text-gray-900">Metrics</h4>
+              <div className="flex items-center space-x-1 text-xs text-gray-600">
+                <Activity className="w-3 h-3" />
+                <span>5 days</span>
+              </div>
+            </div>
+
+            {/* Vertical List for Mobile */}
+            <div className="space-y-3">
               {Object.entries(pageInsights.insights).map(([key, insight]) => {
                 const currentValue = getLatestValue(insight);
                 const previousValue = getPreviousValue(insight);
+                const numericCurrent = getNumericValue(
+                  insight,
+                  insight.values.length - 1
+                );
                 const percentageChange = getPercentageChange(
-                  getNumericValue(insight, insight.values.length - 1),
+                  numericCurrent,
                   previousValue
                 );
+                const isExpanded = expandedMetric === key;
+
+                const chartData =
+                  insight.values && Array.isArray(insight.values)
+                    ? insight.values.slice(-5).map((v) => ({
+                        date: new Date(v.end_time).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                        }),
+                        value: getNumericValue(
+                          insight,
+                          insight.values.indexOf(v)
+                        ),
+                      }))
+                    : [];
+
+                const isPositive =
+                  percentageChange && parseFloat(percentageChange) >= 0;
 
                 return (
                   <div
                     key={key}
-                    className="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-lg p-5 hover:shadow-lg transition-all duration-200"
+                    className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden"
                   >
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center space-x-3">
-                        {getMetricIcon(key)}
-                        <h5 className="font-semibold text-gray-900 text-sm leading-tight">
-                          {insight.title || formatMetricName(key)}
-                        </h5>
+                    {/* Compact Header - Always Visible */}
+                    <div
+                      className="p-4 active:bg-gray-50 transition-colors"
+                      onClick={() => setExpandedMetric(isExpanded ? null : key)}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-3 flex-1 min-w-0">
+                          <div className="p-2 bg-gray-50 rounded-lg flex-shrink-0">
+                            {getMetricIcon(key)}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h5 className="font-semibold text-gray-900 text-sm truncate">
+                              {insight.title || formatMetricName(key)}
+                            </h5>
+                            <p className="text-xs text-gray-500 truncate">
+                              {insight.description}
+                            </p>
+                          </div>
+                        </div>
+                        <ChevronRight
+                          className={`w-5 h-5 text-gray-400 flex-shrink-0 ml-2 transition-transform ${
+                            isExpanded ? "rotate-90" : ""
+                          }`}
+                        />
+                      </div>
+
+                      {/* Value and Change - Always Visible */}
+                      <div className="flex items-center justify-between mt-3">
+                        <p className="text-3xl font-bold text-gray-900">
+                          {currentValue}
+                        </p>
+                        {percentageChange && (
+                          <div
+                            className={`flex items-center space-x-1 text-xs font-semibold ${
+                              isPositive
+                                ? "text-green-700 bg-green-50"
+                                : "text-red-700 bg-red-50"
+                            } px-2 py-1 rounded-lg`}
+                          >
+                            {isPositive ? (
+                              <TrendingUp className="w-3 h-3" />
+                            ) : (
+                              <TrendingDown className="w-3 h-3" />
+                            )}
+                            <span>
+                              {Math.abs(parseFloat(percentageChange))}%
+                            </span>
+                          </div>
+                        )}
                       </div>
                     </div>
 
-                    <div className="mb-4">
-                      <p className="text-3xl font-bold text-gray-900 mb-1">
-                        {currentValue}
-                      </p>
-                      {percentageChange && (
-                        <div
-                          className={`inline-flex items-center space-x-1 text-sm font-medium ${
-                            parseFloat(percentageChange) >= 0
-                              ? "text-green-600 bg-green-50"
-                              : "text-red-600 bg-red-50"
-                          } px-2 py-1 rounded`}
-                        >
-                          <span>
-                            {parseFloat(percentageChange) >= 0 ? "↗" : "↘"}
-                          </span>
-                          <span>{Math.abs(parseFloat(percentageChange))}%</span>
-                        </div>
-                      )}
-                    </div>
-
-                    {insight.description && (
-                      <p className="text-xs text-gray-600 mb-3 leading-relaxed">
-                        {insight.description}
-                      </p>
+                    {/* Expandable Chart Section */}
+                    {isExpanded && chartData.length > 1 && (
+                      <div className="px-4 pb-4 pt-2 border-t border-gray-100 bg-gray-50">
+                        <p className="text-xs font-semibold text-gray-500 mb-3 uppercase tracking-wide">
+                          5-Day Trend
+                        </p>
+                        <ResponsiveContainer width="100%" height={200}>
+                          <AreaChart data={chartData}>
+                            <defs>
+                              <linearGradient
+                                id={`gradient-${key}`}
+                                x1="0"
+                                y1="0"
+                                x2="0"
+                                y2="1"
+                              >
+                                <stop
+                                  offset="5%"
+                                  stopColor="#3b82f6"
+                                  stopOpacity={0.3}
+                                />
+                                <stop
+                                  offset="95%"
+                                  stopColor="#3b82f6"
+                                  stopOpacity={0}
+                                />
+                              </linearGradient>
+                            </defs>
+                            <XAxis
+                              dataKey="date"
+                              tick={{ fontSize: 10, fill: "#6b7280" }}
+                              tickLine={false}
+                              axisLine={{ stroke: "#e5e7eb" }}
+                            />
+                            <YAxis
+                              tick={{ fontSize: 10, fill: "#6b7280" }}
+                              tickLine={false}
+                              axisLine={{ stroke: "#e5e7eb" }}
+                              tickFormatter={(value) => {
+                                if (value >= 1000)
+                                  return `${(value / 1000).toFixed(1)}K`;
+                                return value;
+                              }}
+                            />
+                            <Tooltip
+                              contentStyle={{
+                                fontSize: "12px",
+                                backgroundColor: "rgba(255, 255, 255, 0.95)",
+                                border: "1px solid #e5e7eb",
+                                borderRadius: "8px",
+                                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                              }}
+                              formatter={(value) => [
+                                value.toLocaleString(),
+                                insight.title,
+                              ]}
+                            />
+                            <Area
+                              type="monotone"
+                              dataKey="value"
+                              stroke="#3b82f6"
+                              strokeWidth={2.5}
+                              fill={`url(#gradient-${key})`}
+                              dot={{
+                                r: 4,
+                                fill: "#3b82f6",
+                                strokeWidth: 2,
+                                stroke: "#fff",
+                              }}
+                              activeDot={{ r: 5 }}
+                            />
+                          </AreaChart>
+                        </ResponsiveContainer>
+                      </div>
                     )}
-
-                    {/* Recent Values Chart-like Display */}
-                    {insight.values &&
-                      Array.isArray(insight.values) &&
-                      insight.values.length > 1 && (
-                        <div className="mt-4">
-                          <p className="text-xs font-medium text-gray-500 mb-2">
-                            Recent Trend
-                          </p>
-                          <div className="flex justify-between items-end h-12 bg-white rounded p-2">
-                            {insight.values.slice(-5).map((value, index) => {
-                              const actualIndex =
-                                insight.values.length - 5 + index;
-                              const numericValues = insight.values
-                                .slice(-5)
-                                .map((_, i) =>
-                                  getNumericValue(
-                                    insight,
-                                    insight.values.length - 5 + i
-                                  )
-                                );
-                              const maxValue = Math.max(...numericValues);
-                              const currentNumValue = getNumericValue(
-                                insight,
-                                actualIndex
-                              );
-                              const height =
-                                maxValue > 0
-                                  ? (currentNumValue / maxValue) * 100
-                                  : 0;
-                              return (
-                                <div
-                                  key={index}
-                                  className="flex flex-col items-center flex-1"
-                                >
-                                  <div
-                                    className="w-2 bg-blue-400 rounded-t"
-                                    style={{
-                                      height: `${Math.max(height, 2)}%`,
-                                    }}
-                                  ></div>
-                                  <span className="text-xs text-gray-400 mt-1">
-                                    {new Date(value.end_time).getDate()}
-                                  </span>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      )}
                   </div>
                 );
               })}
             </div>
           </div>
         ) : (
-          <div className="text-center py-12 bg-gray-50 rounded-lg">
-            <BarChart3 className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-            <h4 className="text-lg font-medium text-gray-700 mb-2">
-              No Insights Available
+          <div className="text-center py-12 px-4">
+            <div className="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
+              <BarChart3 className="w-8 h-8 text-gray-400" />
+            </div>
+            <h4 className="text-lg font-semibold text-gray-700 mb-2">
+              No Insights
             </h4>
-            <p className="text-gray-500 mb-4">
-              This page may not have enough data for insights
+            <p className="text-sm text-gray-500 mb-6">
+              Not enough data available yet
             </p>
             {pageInsights.warning && (
-              <div className="max-w-md mx-auto text-left bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                <p className="text-yellow-800 font-medium mb-2">
-                  {pageInsights.warning}
-                </p>
+              <div className="text-left bg-yellow-50 border border-yellow-200 rounded-xl p-4 shadow-sm">
+                <div className="flex items-start mb-2">
+                  <AlertCircle className="w-4 h-4 text-yellow-600 mr-2 mt-0.5 flex-shrink-0" />
+                  <p className="text-sm text-yellow-900 font-semibold">
+                    {pageInsights.warning}
+                  </p>
+                </div>
                 {pageInsights.possibleReasons && (
-                  <ul className="text-yellow-700 text-sm space-y-1">
+                  <ul className="text-xs text-yellow-800 space-y-1 ml-6">
                     {pageInsights.possibleReasons.map((reason, index) => (
                       <li key={index} className="flex items-start">
                         <span className="text-yellow-600 mr-2">•</span>
-                        {reason}
+                        <span>{reason}</span>
                       </li>
                     ))}
                   </ul>
@@ -810,7 +985,7 @@ function FacebookIntegrationContent() {
   }
 
   return (
-    <div className="min-h-screen  bg-gray-50 p-6">
+    <div className="min-h-screen  bg-gray-50 p-0.5">
       <div className="max-w-[320px] md:max-w-7xl mx-auto">
         {/* Header */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
@@ -1076,14 +1251,16 @@ function FacebookIntegrationContent() {
 // Main export component with Suspense boundary
 export default function FacebookIntegration() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <RefreshCw className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-4" />
-          <p className="text-gray-600">Loading Facebook integration...</p>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="text-center">
+            <RefreshCw className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-4" />
+            <p className="text-gray-600">Loading Facebook integration...</p>
+          </div>
         </div>
-      </div>
-    }>
+      }
+    >
       <FacebookIntegrationContent />
     </Suspense>
   );

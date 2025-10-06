@@ -6,8 +6,8 @@ export const metadata = {
     "Read the privacy policy of SEOcial Media Solutions. Learn how we collect, use, and protect your personal information while providing digital marketing, web development, and content services.",
   keywords:
     "privacy policy, SEOcial Media privacy, personal data protection, website privacy, digital marketing privacy, SEOcial Media Solutions policies",
-  authors: [{ name: "SEOcial Media Solutions" }],
-  publisher: "SEOcial Media Solutions",
+  authors: [{ name: "Mudit Mathur" }],
+  publisher: "Mudit Mathur",
   robots: "index, follow",
   alternates: {
     canonical: "https://seocialmedia.in/privacy-policy",

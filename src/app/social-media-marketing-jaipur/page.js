@@ -7,8 +7,8 @@ export const metadata = {
     "Boost your brand’s online presence with SEOcial Media Solutions in Jaipur. We provide expert social media marketing services across Facebook, Instagram, LinkedIn, and Twitter to increase engagement and drive business growth.",
   keywords:
     "social media marketing Jaipur, SMM services Jaipur, Facebook marketing Jaipur, Instagram marketing Jaipur, LinkedIn marketing Jaipur, Twitter marketing Jaipur, digital marketing Jaipur",
-  authors: [{ name: "SEOcial Media Solutions" }],
-  publisher: "SEOcial Media Solutions",
+  authors: [{ name: "Mudit Mathur" }],
+  publisher: "Mudit Mathur",
   robots: "index, follow",
   alternates: {
     canonical: "https://seocialmedia.in/social-media-marketing-jaipur",

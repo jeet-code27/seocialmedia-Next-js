@@ -55,6 +55,7 @@ export default async function sitemap() {
     "/blog/seo-company-jaipur",
     "/blog/top-app-development-company-jaipur-seocial-media",
     "/blog/top-10-website-development-companies-jaipur-2025",
+    "/blog/social-media-optimization-checklist-2025",
   ].map((post) => ({
     url: `${URL}${post}`,
     lastModified: new Date().toISOString(),

@@ -7,8 +7,8 @@ export const metadata = {
     "Looking for professional content writing services in Ajmer? SEOcial Media Solutions provides high-quality SEO content, blogs, website copy, and marketing content tailored to your business.",
   keywords:
     "content writing company Ajmer, professional content writers Ajmer, SEO content writing Ajmer, website content services Ajmer, blog writing services Ajmer, marketing content Ajmer",
-  authors: [{ name: "SEOcial Media Solutions" }],
-  publisher: "SEOcial Media Solutions",
+  authors: [{ name: "Mudit Mathur" }],
+  publisher: "Mudit Mathur",
   robots: "index, follow",
   alternates: {
     canonical: "https://seocialmedia.in/content-writing-company-ajmer",

@@ -6,8 +6,8 @@ export const metadata = {
     "Explore exciting career opportunities at SEOcial Media, Jaipur's leading website development and digital marketing company. Join our team of creative professionals and grow your career with us.",
   keywords:
     "SEOcial Media careers, jobs in Jaipur digital marketing, web development jobs Jaipur, SEO company jobs, social media marketing careers, content writing jobs Jaipur, join SEOcial Media, digital marketing team Jaipur",
-  authors: [{ name: "SEOcial Media Solutions" }],
-  publisher: "SEOcial Media Solutions",
+  authors: [{ name: "Mudit Mathur" }],
+  publisher: "Mudit Mathur",
   robots: "index, follow",
   alternates: {
     canonical: "https://seocialmedia.in/career",

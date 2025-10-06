@@ -6,8 +6,8 @@ export const metadata = {
     "Grow your business with SEOcial Media Solutions, the top lead generation company in Jaipur. We offer B2B and B2C lead generation, email campaigns, and sales prospecting to increase revenue.",
   keywords:
     "lead generation company Jaipur, B2B lead generation Jaipur, B2C lead generation Jaipur, sales leads Jaipur, business leads Jaipur, marketing leads Jaipur",
-  authors: [{ name: "SEOcial Media Solutions" }],
-  publisher: "SEOcial Media Solutions",
+  authors: [{ name: "Mudit Mathur" }],
+  publisher: "Mudit Mathur",
   robots: "index, follow",
   alternates: {
     canonical: "https://seocialmedia.in/lead-generation-company-jaipur",

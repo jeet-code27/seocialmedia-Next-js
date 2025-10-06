@@ -9,8 +9,8 @@ export const metadata = {
     "Stay updated with SEOcial Media's blog! Discover expert insights, tips, and trends on digital marketing, web development, SEO, and social media strategies.",
   keywords:
     "SEOcial Media blog, digital marketing articles, web development insights, SEO tips, social media strategies, online marketing blog, content marketing, Jaipur digital marketing blog",
-  authors: [{ name: "SEOcial Media Solutions" }],
-  publisher: "SEOcial Media Solutions",
+  authors: [{ name: "Mudit Mathur" }],
+  publisher: "Mudit Mathur",
   robots: "index, follow",
   alternates: {
     canonical: "https://seocialmedia.in/blog",
