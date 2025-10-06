@@ -29,7 +29,7 @@ export const metadata ={
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://seocialmedia.in'), // Replace with your actual domain
+  metadataBase: new URL('https://seocialmedia.in'), 
   alternates: {
     canonical: '/',
   },
