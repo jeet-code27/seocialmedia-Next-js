@@ -6,7 +6,7 @@ export const Founders = () => {
     {
       name: "Mudit Mathur",
       role: "Co-Founder & CEO",
-      image: "/images/founders/mudit-mathur.jpg",
+      image: "/images/founders/muditmathur.jpg",
       bio: "A dynamic entrepreneur with over 12 years of cross-industry expertise spanning Banking, Pharmaceuticals, Hospitality, and Digital Marketing. Mudit brings a unique blend of strategic thinking and hands-on execution to drive measurable results for our healthcare clients.",
       education: [
         "MSc Digital Marketing & Channel Management - University of Surrey, UK",
@@ -19,7 +19,7 @@ export const Founders = () => {
     {
       name: "Kushagra Parashar",
       role: "Co-Founder & CEO",
-      image: "/images/founders/kushagra-parashar.png",
+      image: "/images/founders/kushagra-parasher.jpg",
       bio: "A tech visionary with a passion for innovation, Kushagra is dedicated to leveraging technology to create impactful solutions for our clients.",
       education: [
         "Diploma in B.Sc(IT) from NIIT (Software Engineer)",
@@ -52,11 +52,11 @@ export const Founders = () => {
               className=" rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
             >
               {/* Image */}
-              <div className="relative h-100 bg-gradient-to-br from-blue-100 to-purple-100">
+              <div className="relative h-80 w-full lg:w-[80%]  lg:h-100">
                 <img
                   src={founder.image}
                   alt={founder.name}
-                  className="w-full h-full object-fit"
+                  className="w-full h-full object-fit lg:rounded-full"
                 />
               </div>
 

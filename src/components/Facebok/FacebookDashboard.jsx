@@ -15,6 +15,7 @@ import {
   Line,
   Area,
   AreaChart,
+  LabelList,
 } from "recharts";
 import {
   BarChart3,
@@ -47,24 +48,24 @@ function FacebookIntegrationContent() {
     totalPages: 0,
     pages: [],
   });
-
+  const [pageInsights, setPageInsights] = useState({});
+  const [pagePosts, setPagePosts] = useState({});
+  const [loadingState, setLoadingState] = useState({}); // { [pageId]: true/false }
   const [facebookPages, setFacebookPages] = useState([]);
   const [selectedPage, setSelectedPage] = useState(null);
-  const [pageInsights, setPageInsights] = useState(null);
-  const [pagePosts, setPagePosts] = useState([]);
+
   const [loading, setLoading] = useState(false);
   const [insightsLoading, setInsightsLoading] = useState(false);
   const [postsLoading, setPostsLoading] = useState(false);
   const [error, setError] = useState("");
   const [expandedMetric, setExpandedMetric] = useState(null);
-   const [chartType, setChartType] = useState("pie");
+  const [chartType, setChartType] = useState("pie");
+  const [expandedPosts, setExpandedPosts] = useState({});
   // Your backend API base URL
   const API_BASE = "https://api.seocialmedia.in/api";
 
   // Mock auth token - replace this with your actual auth token
-  const authToken =
-    tokenFromQuery ||
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4YzUwZjljYWIwZDQ2NjUwZmZiOTQxNSIsImlhdCI6MTc1OTQ4MjgxMCwiZXhwIjoxNzYwMDg3NjEwfQ.e5dtK-szVQ_8u1IE1AF-p2MmCsATmKKTM140nsZ7aOI";
+  const authToken = tokenFromQuery;
 
   // API call helper with better error handling
   const apiCall = async (endpoint, method = "GET", body = null) => {
@@ -92,7 +93,6 @@ function FacebookIntegrationContent() {
       throw err;
     }
   };
-
   // Helper function to safely get metric icon
   const getMetricIcon = (metricName) => {
     if (!metricName || typeof metricName !== "string")
@@ -107,7 +107,6 @@ function FacebookIntegrationContent() {
       return <Users className="w-5 h-5 text-green-500" />;
     return <TrendingUp className="w-5 h-5 text-purple-500" />;
   };
-
   // Helper function to safely format metric names
   const formatMetricName = (metricName) => {
     if (!metricName || typeof metricName !== "string") return "Unknown Metric";
@@ -117,7 +116,6 @@ function FacebookIntegrationContent() {
       .replace(/\b\w/g, (l) => l.toUpperCase())
       .replace("Page ", "");
   };
-
   // FIXED: Helper function to safely get latest value from insight
   const getLatestValue = (insight) => {
     try {
@@ -159,7 +157,6 @@ function FacebookIntegrationContent() {
       return "Error";
     }
   };
-
   // FIXED: Helper function to safely get previous value for comparison
   const getPreviousValue = (insight) => {
     try {
@@ -201,7 +198,6 @@ function FacebookIntegrationContent() {
       return null;
     }
   };
-
   // Helper function to safely calculate percentage change
   const getPercentageChange = (current, previous) => {
     try {
@@ -226,7 +222,6 @@ function FacebookIntegrationContent() {
       return null;
     }
   };
-
   // FIXED: Helper function to get numeric value for chart rendering
   const getNumericValue = (insight, index) => {
     try {
@@ -252,7 +247,6 @@ function FacebookIntegrationContent() {
       return 0;
     }
   };
-
   // Listen for popup messages
   useEffect(() => {
     const handleMessage = (event) => {
@@ -267,12 +261,10 @@ function FacebookIntegrationContent() {
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
   }, []);
-
   // Check Facebook connection status on component mount
   useEffect(() => {
     checkFacebookStatus();
   }, []);
-
   const checkFacebookStatus = async () => {
     try {
       setLoading(true);
@@ -300,7 +292,6 @@ function FacebookIntegrationContent() {
       setLoading(false);
     }
   };
-
   const connectToFacebook = async () => {
     try {
       setLoading(true);
@@ -333,7 +324,6 @@ function FacebookIntegrationContent() {
       setLoading(false);
     }
   };
-
   const getFacebookPages = async () => {
     try {
       setLoading(true);
@@ -342,6 +332,14 @@ function FacebookIntegrationContent() {
       const response = await apiCall("/facebook/pages");
 
       setFacebookPages(response.data.pages || []);
+      // Auto-select the first page if none selected
+      if (
+        (!selectedPage || selectedPage === null) &&
+        response.data.pages &&
+        response.data.pages.length > 0
+      ) {
+        setSelectedPage(response.data.pages[0].id);
+      }
       setConnectionStatus((prev) => ({
         ...prev,
         isConnected: true,
@@ -353,52 +351,70 @@ function FacebookIntegrationContent() {
       setLoading(false);
     }
   };
-
   const getPageInsights = async (pageId) => {
-    try {
-      setInsightsLoading(true);
-      setError("");
+    setLoadingState((prev) => ({
+      ...prev,
+      [pageId]: { ...(prev[pageId] || {}), insights: true },
+    }));
+    setError("");
 
+    try {
       console.log("Fetching insights for page:", pageId);
       const response = await apiCall(
         `/facebook/pages/${pageId}/insights?period=28`
       );
       console.log("Received insights response:", response);
 
-      setPageInsights(response.data);
-      setSelectedPage(pageId);
+      setPageInsights((prev) => ({
+        ...prev,
+        [pageId]: response.data,
+      }));
     } catch (err) {
       console.error("Error fetching insights:", err);
       setError(err.message || "Failed to get page insights");
-      setPageInsights({
-        error: true,
-        message: err.message || "Failed to get page insights",
-        pageId: pageId,
-      });
-      setSelectedPage(pageId);
+      setPageInsights((prev) => ({
+        ...prev,
+        [pageId]: {
+          error: true,
+          message: err.message || "Failed to get page insights",
+        },
+      }));
     } finally {
-      setInsightsLoading(false);
+      setLoadingState((prev) => ({
+        ...prev,
+        [pageId]: { ...(prev[pageId] || {}), insights: false },
+      }));
     }
   };
-
   const getPagePosts = async (pageId) => {
-    try {
-      setPostsLoading(true);
-      setError("");
+    setLoadingState((prev) => ({
+      ...prev,
+      [pageId]: { ...(prev[pageId] || {}), posts: true },
+    }));
+    setError("");
 
+    try {
       const response = await apiCall(
         `/facebook/pages/${pageId}/posts?limit=10`
       );
-      setPagePosts(response.data.posts || response.data || []);
+      setPagePosts((prev) => ({
+        ...prev,
+        [pageId]: response.data.posts || response.data || [],
+      }));
     } catch (err) {
       console.error("Error fetching posts:", err);
       setError(err.message || "Failed to get page posts");
-      setPagePosts([]);
+      setPagePosts((prev) => ({
+        ...prev,
+        [pageId]: [],
+      }));
     } finally {
-      setPostsLoading(false);
+      setLoadingState((prev) => ({
+        ...prev,
+        [pageId]: { ...(prev[pageId] || {}), posts: false },
+      }));
     }
   };
-
   const disconnectFacebook = async () => {
     try {
       setLoading(true);
@@ -416,15 +432,15 @@ function FacebookIntegrationContent() {
       });
       setFacebookPages([]);
       setSelectedPage(null);
-      setPageInsights(null);
-      setPagePosts([]);
+      // keep state shapes consistent (objects) to avoid runtime indexing errors
+      setPageInsights({});
+      setPagePosts({});
     } catch (err) {
       setError(err.message || "Failed to disconnect Facebook");
     } finally {
       setLoading(false);
     }
   };
-
   const formatDate = (dateString) => {
     if (!dateString) return "Unknown date";
     try {
@@ -439,27 +455,33 @@ function FacebookIntegrationContent() {
       return "Invalid date";
     }
   };
-
   const truncateText = (text, maxLength = 200) => {
     if (!text) return "";
     if (text.length <= maxLength) return text;
     return text.substring(0, maxLength) + "...";
   };
-
+  //  insights
   const renderInsights = () => {
-   
+    const currentInsights = pageInsights[selectedPage];
+    const isLoading = loadingState[selectedPage]?.insights;
     const data = [
-      { name: "Followers", value: pageInsights.pageInfo.followers_count || 0 },
-      { name: "Fans", value: pageInsights.pageInfo.fan_count || 0 },
-      { name: "Days", value: pageInsights.period || 28 },
-      { name: "Metrics", value: pageInsights.debug?.successfulMetrics || 0 },
+      {
+        name: "Followers",
+        value: currentInsights?.pageInfo?.followers_count || 0,
+      },
+      { name: "Fans", value: currentInsights?.pageInfo?.fan_count || 0 },
+      { name: "Days", value: currentInsights?.period || 28 },
+      {
+        name: "Metrics",
+        value: currentInsights?.debug?.successfulMetrics || 0,
+      },
     ];
 
     const COLORS = ["#3b82f6", "#ef4444", "#10b981", "#f59e0b"];
 
-    if (!pageInsights) return null;
+    if (!currentInsights) return null;
 
-    if (pageInsights.error) {
+    if (currentInsights.error) {
       return (
         <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-4 mb-4">
           <h2 className="text-xl font-bold text-gray-900 mb-4">
@@ -473,7 +495,7 @@ function FacebookIntegrationContent() {
                   Unable to load insights
                 </h3>
                 <p className="text-red-700 text-sm mt-1">
-                  {pageInsights.message}
+                  {currentInsights.message}
                 </p>
               </div>
             </div>
@@ -497,7 +519,7 @@ function FacebookIntegrationContent() {
         </div>
 
         {/* Page Info Card */}
-        {pageInsights.pageInfo && (
+        {currentInsights.pageInfo && (
           <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-4 text-white rounded-2xl">
             <h2 className="text-center text-lg font-bold truncate pr-2 m-5">
               Performance Analytics
@@ -505,30 +527,32 @@ function FacebookIntegrationContent() {
 
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-bold truncate pr-2">
-                {pageInsights.pageInfo.name}
+                {currentInsights.pageInfo.name}
               </h3>
               <span className="bg-white/20 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full font-medium whitespace-nowrap">
-                {pageInsights.pageInfo.category || "Business"}
+                {currentInsights.pageInfo.category || "Business"}
               </span>
             </div>
 
-           {/* Chart Type Toggle */}
-<div className="mb-4 flex justify-end items-center space-x-2">
-  <span className="text-white text-sm">Pie</span>
-  <button
-    onClick={() => setChartType(chartType === "pie" ? "bar" : "pie")}
-    className={`w-12 h-6 rounded-full p-1 transition-colors duration-300 ${
-      chartType === "pie" ? "bg-green-500" : "bg-gray-400"
-    }`}
-  >
-    <div
-      className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ${
-        chartType === "pie" ? "translate-x-0" : "translate-x-6"
-      }`}
-    />
-  </button>
-  <span className="text-white text-sm">Bar</span>
-</div>
+            {/* Chart Type Toggle */}
+            <div className="mb-4 flex justify-end items-center space-x-2">
+              <span className="text-white text-sm">Pie</span>
+              <button
+                onClick={() =>
+                  setChartType(chartType === "pie" ? "bar" : "pie")
+                }
+                className={`w-12 h-6 rounded-full p-1 transition-colors duration-300 ${
+                  chartType === "pie" ? "bg-green-500" : "bg-gray-400"
+                }`}
+              >
+                <div
+                  className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ${
+                    chartType === "pie" ? "translate-x-0" : "translate-x-6"
+                  }`}
+                />
+              </button>
+              <span className="text-white text-sm">Bar</span>
+            </div>
 
             {/* Render Chart */}
             <div style={{ width: "100%", height: 200 }}>
@@ -580,28 +604,29 @@ function FacebookIntegrationContent() {
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center">
                 <Users className="w-6 h-6 mx-auto mb-2 opacity-90 text-blue-100" />
                 <p className="text-2xl font-bold mb-0.5">
-                  {(pageInsights.pageInfo.followers_count / 1000).toFixed(1)}K
+                  {(currentInsights.pageInfo.followers_count / 1000).toFixed(1)}
+                  K
                 </p>
                 <p className="text-blue-100 text-xs font-medium">Followers</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center">
                 <Heart className="w-6 h-6 mx-auto mb-2 opacity-90 text-red-500" />
                 <p className="text-2xl font-bold mb-0.5">
-                  {(pageInsights.pageInfo.fan_count / 1000).toFixed(1)}K
+                  {(currentInsights.pageInfo.fan_count / 1000).toFixed(1)}K
                 </p>
                 <p className="text-blue-100 text-xs font-medium">Fans</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center">
                 <Calendar className="w-6 h-6 mx-auto mb-2 opacity-90" />
                 <p className="text-2xl font-bold mb-0.5">
-                  {pageInsights.period || 28}
+                  {currentInsights.period || 28}
                 </p>
                 <p className="text-blue-100 text-xs font-medium">Days</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center">
                 <BarChart3 className="w-6 h-6 mx-auto mb-2 opacity-90 text-green-400" />
                 <p className="text-2xl font-bold mb-0.5">
-                  {pageInsights.debug?.successfulMetrics || 0}
+                  {currentInsights.debug?.successfulMetrics || 0}
                 </p>
                 <p className="text-blue-100 text-xs font-medium">Metrics</p>
               </div>
@@ -610,8 +635,8 @@ function FacebookIntegrationContent() {
         )}
 
         {/* Mobile Metrics List */}
-        {pageInsights.insights &&
-        Object.keys(pageInsights.insights).length > 0 ? (
+        {currentInsights.insights &&
+        Object.keys(currentInsights.insights).length > 0 ? (
           <div className="p-0.5">
             <div className="flex items-center justify-between mb-4">
               <h4 className="text-lg font-bold text-gray-900">Metrics</h4>
@@ -623,171 +648,178 @@ function FacebookIntegrationContent() {
 
             {/* Vertical List for Mobile */}
             <div className="space-y-3">
-              {Object.entries(pageInsights.insights).map(([key, insight]) => {
-                const currentValue = getLatestValue(insight);
-                const previousValue = getPreviousValue(insight);
-                const numericCurrent = getNumericValue(
-                  insight,
-                  insight.values.length - 1
-                );
-                const percentageChange = getPercentageChange(
-                  numericCurrent,
-                  previousValue
-                );
-                const isExpanded = expandedMetric === key;
+              {Object.entries(currentInsights.insights).map(
+                ([key, insight]) => {
+                  const currentValue = getLatestValue(insight);
+                  const previousValue = getPreviousValue(insight);
+                  const numericCurrent = getNumericValue(
+                    insight,
+                    insight.values.length - 1
+                  );
+                  const percentageChange = getPercentageChange(
+                    numericCurrent,
+                    previousValue
+                  );
+                  const isExpanded = expandedMetric === key;
 
-                const chartData =
-                  insight.values && Array.isArray(insight.values)
-                    ? insight.values.slice(-5).map((v) => ({
-                        date: new Date(v.end_time).toLocaleDateString("en-US", {
-                          month: "short",
-                          day: "numeric",
-                        }),
-                        value: getNumericValue(
-                          insight,
-                          insight.values.indexOf(v)
-                        ),
-                      }))
-                    : [];
+                  const chartData =
+                    insight.values && Array.isArray(insight.values)
+                      ? insight.values.slice(-5).map((v) => ({
+                          date: new Date(v.end_time).toLocaleDateString(
+                            "en-US",
+                            {
+                              month: "short",
+                              day: "numeric",
+                            }
+                          ),
+                          value: getNumericValue(
+                            insight,
+                            insight.values.indexOf(v)
+                          ),
+                        }))
+                      : [];
 
-                const isPositive =
-                  percentageChange && parseFloat(percentageChange) >= 0;
+                  const isPositive =
+                    percentageChange && parseFloat(percentageChange) >= 0;
 
-                return (
-                  <div
-                    key={key}
-                    className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden"
-                  >
-                    {/* Compact Header - Always Visible */}
+                  return (
                     <div
-                      className="p-4 active:bg-gray-50 transition-colors"
-                      onClick={() => setExpandedMetric(isExpanded ? null : key)}
+                      key={key}
+                      className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden"
                     >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-3 flex-1 min-w-0">
-                          <div className="p-2 bg-gray-50 rounded-lg flex-shrink-0">
-                            {getMetricIcon(key)}
+                      {/* Compact Header - Always Visible */}
+                      <div
+                        className="p-4 active:bg-gray-50 transition-colors"
+                        onClick={() =>
+                          setExpandedMetric(isExpanded ? null : key)
+                        }
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-3 flex-1 min-w-0">
+                            <div className="p-2 bg-gray-50 rounded-lg flex-shrink-0">
+                              {getMetricIcon(key)}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h5 className="font-semibold text-gray-900 text-sm truncate">
+                                {insight.title || formatMetricName(key)}
+                              </h5>
+                              <p className="text-xs text-gray-500 truncate">
+                                {insight.description}
+                              </p>
+                            </div>
                           </div>
-                          <div className="flex-1 min-w-0">
-                            <h5 className="font-semibold text-gray-900 text-sm truncate">
-                              {insight.title || formatMetricName(key)}
-                            </h5>
-                            <p className="text-xs text-gray-500 truncate">
-                              {insight.description}
-                            </p>
-                          </div>
+                          <ChevronRight
+                            className={`w-5 h-5 text-gray-400 flex-shrink-0 ml-2 transition-transform ${
+                              isExpanded ? "rotate-90" : ""
+                            }`}
+                          />
                         </div>
-                        <ChevronRight
-                          className={`w-5 h-5 text-gray-400 flex-shrink-0 ml-2 transition-transform ${
-                            isExpanded ? "rotate-90" : ""
-                          }`}
-                        />
+
+                        {/* Value and Change - Always Visible */}
+                        <div className="flex items-center justify-between mt-3">
+                          <p className="text-3xl font-bold text-gray-900">
+                            {currentValue}
+                          </p>
+                          {percentageChange && (
+                            <div
+                              className={`flex items-center space-x-1 text-xs font-semibold ${
+                                isPositive
+                                  ? "text-green-700 bg-green-50"
+                                  : "text-red-700 bg-red-50"
+                              } px-2 py-1 rounded-lg`}
+                            >
+                              {isPositive ? (
+                                <TrendingUp className="w-3 h-3" />
+                              ) : (
+                                <TrendingDown className="w-3 h-3" />
+                              )}
+                              <span>
+                                {Math.abs(parseFloat(percentageChange))}%
+                              </span>
+                            </div>
+                          )}
+                        </div>
                       </div>
 
-                      {/* Value and Change - Always Visible */}
-                      <div className="flex items-center justify-between mt-3">
-                        <p className="text-3xl font-bold text-gray-900">
-                          {currentValue}
-                        </p>
-                        {percentageChange && (
-                          <div
-                            className={`flex items-center space-x-1 text-xs font-semibold ${
-                              isPositive
-                                ? "text-green-700 bg-green-50"
-                                : "text-red-700 bg-red-50"
-                            } px-2 py-1 rounded-lg`}
-                          >
-                            {isPositive ? (
-                              <TrendingUp className="w-3 h-3" />
-                            ) : (
-                              <TrendingDown className="w-3 h-3" />
-                            )}
-                            <span>
-                              {Math.abs(parseFloat(percentageChange))}%
-                            </span>
-                          </div>
-                        )}
-                      </div>
+                      {/* Expandable Chart Section */}
+                      {isExpanded && chartData.length > 1 && (
+                        <div className="px-4 pb-4 pt-2 border-t border-gray-100 bg-gray-50">
+                          <p className="text-xs font-semibold text-gray-500 mb-3 uppercase tracking-wide">
+                            5-Day Trend
+                          </p>
+                          <ResponsiveContainer width="100%" height={200}>
+                            <AreaChart data={chartData}>
+                              <defs>
+                                <linearGradient
+                                  id={`gradient-${key}`}
+                                  x1="0"
+                                  y1="0"
+                                  x2="0"
+                                  y2="1"
+                                >
+                                  <stop
+                                    offset="5%"
+                                    stopColor="#3b82f6"
+                                    stopOpacity={0.3}
+                                  />
+                                  <stop
+                                    offset="95%"
+                                    stopColor="#3b82f6"
+                                    stopOpacity={0}
+                                  />
+                                </linearGradient>
+                              </defs>
+                              <XAxis
+                                dataKey="date"
+                                tick={{ fontSize: 10, fill: "#6b7280" }}
+                                tickLine={false}
+                                axisLine={{ stroke: "#e5e7eb" }}
+                              />
+                              <YAxis
+                                tick={{ fontSize: 10, fill: "#6b7280" }}
+                                tickLine={false}
+                                axisLine={{ stroke: "#e5e7eb" }}
+                                tickFormatter={(value) => {
+                                  if (value >= 1000)
+                                    return `${(value / 1000).toFixed(1)}K`;
+                                  return value;
+                                }}
+                              />
+                              <Tooltip
+                                contentStyle={{
+                                  fontSize: "12px",
+                                  backgroundColor: "rgba(255, 255, 255, 0.95)",
+                                  border: "1px solid #e5e7eb",
+                                  borderRadius: "8px",
+                                  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                                }}
+                                formatter={(value) => [
+                                  value.toLocaleString(),
+                                  insight.title,
+                                ]}
+                              />
+                              <Area
+                                type="monotone"
+                                dataKey="value"
+                                stroke="#3b82f6"
+                                strokeWidth={2.5}
+                                fill={`url(#gradient-${key})`}
+                                dot={{
+                                  r: 4,
+                                  fill: "#3b82f6",
+                                  strokeWidth: 2,
+                                  stroke: "#fff",
+                                }}
+                                activeDot={{ r: 5 }}
+                              />
+                            </AreaChart>
+                          </ResponsiveContainer>
+                        </div>
+                      )}
                     </div>
-
-                    {/* Expandable Chart Section */}
-                    {isExpanded && chartData.length > 1 && (
-                      <div className="px-4 pb-4 pt-2 border-t border-gray-100 bg-gray-50">
-                        <p className="text-xs font-semibold text-gray-500 mb-3 uppercase tracking-wide">
-                          5-Day Trend
-                        </p>
-                        <ResponsiveContainer width="100%" height={200}>
-                          <AreaChart data={chartData}>
-                            <defs>
-                              <linearGradient
-                                id={`gradient-${key}`}
-                                x1="0"
-                                y1="0"
-                                x2="0"
-                                y2="1"
-                              >
-                                <stop
-                                  offset="5%"
-                                  stopColor="#3b82f6"
-                                  stopOpacity={0.3}
-                                />
-                                <stop
-                                  offset="95%"
-                                  stopColor="#3b82f6"
-                                  stopOpacity={0}
-                                />
-                              </linearGradient>
-                            </defs>
-                            <XAxis
-                              dataKey="date"
-                              tick={{ fontSize: 10, fill: "#6b7280" }}
-                              tickLine={false}
-                              axisLine={{ stroke: "#e5e7eb" }}
-                            />
-                            <YAxis
-                              tick={{ fontSize: 10, fill: "#6b7280" }}
-                              tickLine={false}
-                              axisLine={{ stroke: "#e5e7eb" }}
-                              tickFormatter={(value) => {
-                                if (value >= 1000)
-                                  return `${(value / 1000).toFixed(1)}K`;
-                                return value;
-                              }}
-                            />
-                            <Tooltip
-                              contentStyle={{
-                                fontSize: "12px",
-                                backgroundColor: "rgba(255, 255, 255, 0.95)",
-                                border: "1px solid #e5e7eb",
-                                borderRadius: "8px",
-                                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                              }}
-                              formatter={(value) => [
-                                value.toLocaleString(),
-                                insight.title,
-                              ]}
-                            />
-                            <Area
-                              type="monotone"
-                              dataKey="value"
-                              stroke="#3b82f6"
-                              strokeWidth={2.5}
-                              fill={`url(#gradient-${key})`}
-                              dot={{
-                                r: 4,
-                                fill: "#3b82f6",
-                                strokeWidth: 2,
-                                stroke: "#fff",
-                              }}
-                              activeDot={{ r: 5 }}
-                            />
-                          </AreaChart>
-                        </ResponsiveContainer>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                  );
+                }
+              )}
             </div>
           </div>
         ) : (
@@ -826,153 +858,198 @@ function FacebookIntegrationContent() {
       </div>
     );
   };
-
-  // Render page posts
+  //  post
   const renderPosts = () => {
-    if (!pagePosts || pagePosts.length === 0) {
-      return null;
+    const toggleExpand = (postId) => {
+      setExpandedPosts((prev) => ({
+        ...prev,
+        [postId]: !prev[postId],
+      }));
+    };
+    const currentPosts = (pagePosts && pagePosts[selectedPage]) || [];
+
+    if (!currentPosts || currentPosts.length === 0) {
+      return (
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+          <Activity className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+          <p className="text-gray-500">No posts available</p>
+        </div>
+      );
     }
 
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-gray-900">Recent Posts</h2>
-          {postsLoading && (
-            <RefreshCw className="w-5 h-5 animate-spin text-blue-600" />
-          )}
-        </div>
+      <div className="space-y-6">
+        {currentPosts.map((post, index) => {
+          const isExpanded = !!expandedPosts[post.id || index];
+          const totalEngagement =
+            (post.likes?.summary?.total_count || 0) +
+            (post.comments?.summary?.total_count || 0) +
+            (post.shares?.count || 0);
 
-        <div className="space-y-6">
-          {pagePosts.map((post, index) => {
-            try {
-              return (
-                <div
-                  key={post.id || index}
-                  className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow"
-                >
-                  {/* Post Header */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-3">
-                      <Calendar className="w-5 h-5 text-blue-600" />
-                      <span className="text-sm text-gray-600 font-medium">
-                        {formatDate(post.created_time)}
-                      </span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <span className="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full font-medium">
-                        {post.type || "post"}
-                      </span>
-                    </div>
+          return (
+            <div
+              key={post.id || index}
+              className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300"
+            >
+              {/* Post Image */}
+              {post.full_picture && (
+                <div className="relative overflow-hidden">
+                  <img
+                    src={post.full_picture}
+                    alt="Post content"
+                    className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
+                    onError={(e) => (e.target.style.display = "none")}
+                  />
+                  <div className="absolute top-4 right-4">
+                    <span className="bg-white/90 backdrop-blur-sm text-gray-800 text-xs px-3 py-1.5 rounded-full font-semibold shadow-lg">
+                      {post.type || "post"}
+                    </span>
                   </div>
+                </div>
+              )}
 
-                  {/* Post Content */}
-                  {post.message && (
-                    <div className="mb-4">
-                      <p className="text-gray-900 leading-relaxed">
-                        {truncateText(post.message, 300)}
-                      </p>
-                    </div>
-                  )}
+              <div className="p-6">
+                {/* Post Header */}
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center space-x-2 text-sm text-gray-600">
+                    <Calendar className="w-4 h-4 text-blue-600" />
+                    <span className="font-medium">
+                      {formatDate(post.created_time)}
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-1 text-purple-600">
+                    <TrendingUp className="w-4 h-4" />
+                    <span className="font-bold">{totalEngagement}</span>
+                  </div>
+                </div>
 
-                  {post.story && (
-                    <div className="mb-4 p-3 bg-gray-50 rounded-lg border-l-4 border-blue-400">
-                      <p className="text-gray-700 italic text-sm">
-                        {post.story}
-                      </p>
-                    </div>
-                  )}
+                {/* Post Content */}
+                {post.message && (
+                  <p
+                    className={`text-gray-900 leading-relaxed mb-4 ${
+                      !isExpanded ? "line-clamp-2 overflow-hidden" : ""
+                    }`}
+                  >
+                    {post.message}
+                  </p>
+                )}
+                {post.message && post.message.length > 100 && (
+                  <button
+                    onClick={() => toggleExpand(post.id || index)}
+                    className="text-blue-500 hover:underline"
+                  >
+                    {isExpanded ? "Less" : "More..."}
+                  </button>
+                )}
 
-                  {/* Post Image */}
-                  {post.full_picture && (
-                    <div className="mb-4">
-                      <img
-                        src={post.full_picture}
-                        alt="Post content"
-                        className="w-full max-h-64 object-cover rounded-lg"
-                        onError={(e) => (e.target.style.display = "none")}
+                {/* Mini Engagement Chart */}
+                <div className="mb-4">
+                  <ResponsiveContainer width="100%" height={60}>
+                    <BarChart
+                      data={[
+                        {
+                          likes: post.likes?.summary?.total_count || 0,
+                          comments: post.comments?.summary?.total_count || 0,
+                          shares: post.shares?.count || 0,
+                        },
+                      ]}
+                      layout="vertical"
+                    >
+                      <XAxis type="number" hide />
+                      <YAxis type="category" hide />
+                      <LabelList position="right" formatter={() => "Likes"} />
+                      <Bar
+                        dataKey="likes"
+                        fill="#ec4899"
+                        radius={[0, 4, 4, 0]}
                       />
-                    </div>
-                  )}
+                      <LabelList
+                        position="right"
+                        formatter={() => "Comments"}
+                      />
+                      <Bar
+                        dataKey="comments"
+                        fill="#3b82f6"
+                        radius={[0, 4, 4, 0]}
+                      />
+                      <LabelList position="right" formatter={() => "Shares"} />
+                      <Bar
+                        dataKey="shares"
+                        fill="#10b981"
+                        radius={[0, 4, 4, 0]}
+                      />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
 
-                  {/* Engagement Metrics */}
-                  <div className="grid grid-cols-4 gap-4 pt-4 border-t border-gray-100">
-                    <div className="text-center">
-                      <div className="flex items-center justify-center space-x-1 text-pink-600">
-                        <Heart className="w-4 h-4" />
-                        <span className="font-bold">
-                          {post.likes?.summary?.total_count ||
-                            post.engagement?.likes ||
-                            0}
-                        </span>
-                      </div>
-                      <p className="text-xs text-gray-500 mt-1">Likes</p>
+                {/* Engagement Metrics */}
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="text-center p-3 bg-pink-50 rounded-lg">
+                    <div className="flex items-center justify-center space-x-1 text-pink-600 mb-1">
+                      <Heart className="w-4 h-4" />
+                      <span className="font-bold text-lg">
+                        {post.likes?.summary?.total_count || 0}
+                      </span>
                     </div>
-                    <div className="text-center">
-                      <div className="flex items-center justify-center space-x-1 text-blue-600">
-                        <MessageSquare className="w-4 h-4" />
-                        <span className="font-bold">
-                          {post.comments?.summary?.total_count ||
-                            post.engagement?.comments ||
-                            0}
-                        </span>
-                      </div>
-                      <p className="text-xs text-gray-500 mt-1">Comments</p>
-                    </div>
-                    <div className="text-center">
-                      <div className="flex items-center justify-center space-x-1 text-green-600">
-                        <Share2 className="w-4 h-4" />
-                        <span className="font-bold">
-                          {post.shares?.count || post.engagement?.shares || 0}
-                        </span>
-                      </div>
-                      <p className="text-xs text-gray-500 mt-1">Shares</p>
-                    </div>
-                    <div className="text-center">
-                      <div className="flex items-center justify-center space-x-1 text-purple-600">
-                        <TrendingUp className="w-4 h-4" />
-                        <span className="font-bold">
-                          {post.engagement?.total ||
-                            (post.likes?.summary?.total_count || 0) +
-                              (post.comments?.summary?.total_count || 0) +
-                              (post.shares?.count || 0)}
-                        </span>
-                      </div>
-                      <p className="text-xs text-gray-500 mt-1">Total</p>
-                    </div>
+                    <p className="text-xs text-gray-600 font-medium">Likes</p>
                   </div>
 
-                  {/* Post Link */}
-                  {post.link && (
-                    <div className="mt-4 pt-3 border-t border-gray-100">
-                      <a
-                        href={post.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-800 text-sm underline"
-                      >
-                        View on Facebook
-                      </a>
+                  <div className="text-center p-3 bg-blue-50 rounded-lg">
+                    <div className="flex items-center justify-center space-x-1 text-blue-600 mb-1">
+                      <MessageCircle className="w-4 h-4" />
+                      <span className="font-bold text-lg">
+                        {post.comments?.summary?.total_count || 0}
+                      </span>
                     </div>
-                  )}
+                    <p className="text-xs text-gray-600 font-medium">
+                      Comments
+                    </p>
+                  </div>
+
+                  <div className="text-center p-3 bg-green-50 rounded-lg">
+                    <div className="flex items-center justify-center space-x-1 text-green-600 mb-1">
+                      <Share2 className="w-4 h-4" />
+                      <span className="font-bold text-lg">
+                        {post.shares?.count || 0}
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-600 font-medium">Shares</p>
+                  </div>
                 </div>
-              );
-            } catch (error) {
-              console.error("Error rendering post:", error);
-              return (
-                <div
-                  key={post.id || index}
-                  className="border border-red-200 rounded-lg p-4 bg-red-50"
-                >
-                  <p className="text-red-800 text-sm">Error displaying post</p>
-                </div>
-              );
-            }
-          })}
-        </div>
+
+                {/* Post Link */}
+                {post.link && (
+                  <div className="mt-4 pt-4 border-t border-gray-100">
+                    <a
+                      href={post.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:text-blue-800 text-sm font-medium hover:underline inline-flex items-center"
+                    >
+                      View on Facebook
+                      <svg
+                        className="w-4 h-4 ml-1"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        })}
       </div>
     );
   };
-
   if (connectionStatus.loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -983,7 +1060,6 @@ function FacebookIntegrationContent() {
       </div>
     );
   }
-
   return (
     <div className="min-h-screen  bg-gray-50 p-0.5">
       <div className="max-w-[320px] md:max-w-7xl mx-auto">
@@ -996,7 +1072,7 @@ function FacebookIntegrationContent() {
               </div>
               <div>
                 <h1 className="text-xl sm:text-3xl font-bold text-gray-900">
-                  Facebook Integration {tokenFromQuery && "(Demo Mode)"}
+                  Facebook Integration
                 </h1>
                 <p className="text-md sm:text-lg text-gray-600">
                   Connect and manage your Facebook pages
@@ -1085,123 +1161,152 @@ function FacebookIntegrationContent() {
                 Your Facebook Pages
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {facebookPages.map((page) => (
-                  <div
-                    key={page.id}
-                    className="border border-gray-200 rounded-lg p-5 hover:border-blue-300 hover:shadow-md transition-all duration-200 bg-gradient-to-br from-white to-gray-50"
-                  >
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-gray-900 text-lg mb-1">
-                          {page.name || "Unknown Page"}
-                        </h3>
-                        <p className="text-sm text-gray-600 mb-1">
-                          {page.category || "No category"}
-                        </p>
-                        <p className="text-xs text-gray-400 font-mono">
-                          ID: {page.id}
-                        </p>
+                {facebookPages.map((page) => {
+                  const isInsightsLoading = loadingState[page.id]?.insights;
+                  const isPostsLoading = loadingState[page.id]?.posts;
+                  const insights = pageInsights[page.id];
+                  const posts = pagePosts[page.id] || [];
+
+                  return (
+                    <div
+                      key={page.id}
+                      className="border border-gray-200 rounded-lg p-5 hover:border-blue-300 hover:shadow-md transition-all duration-200 bg-gradient-to-br from-white to-gray-50"
+                    >
+                      {/* Header */}
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-gray-900 text-lg mb-1">
+                            {page.name || "Unknown Page"}
+                          </h3>
+                          <p className="text-sm text-gray-600 mb-1">
+                            {page.category || "No category"}
+                          </p>
+                          <p className="text-xs text-gray-400 font-mono">
+                            ID: {page.id}
+                          </p>
+                        </div>
+                        <div className="flex items-center">
+                          <Facebook className="w-6 h-6 text-blue-600" />
+                        </div>
                       </div>
-                      <div className="flex items-center">
-                        <Facebook className="w-6 h-6 text-blue-600" />
-                      </div>
-                    </div>
 
-                    {/* Page stats if available */}
-                    {(page.fan_count || page.followers_count) && (
-                      <div className="flex justify-between text-sm text-gray-600 mb-4 p-2 bg-blue-50 rounded">
-                        {page.fan_count && (
-                          <span>
-                            <strong>{page.fan_count.toLocaleString()}</strong>{" "}
-                            fans
-                          </span>
-                        )}
-                        {page.followers_count && (
-                          <span>
-                            <strong>
-                              {page.followers_count.toLocaleString()}
-                            </strong>{" "}
-                            followers
-                          </span>
-                        )}
-                      </div>
-                    )}
+                      {/* Page stats */}
+                      {(page.fan_count || page.followers_count) && (
+                        <div className="flex justify-between text-sm text-gray-600 mb-4 p-2 bg-blue-50 rounded">
+                          {page.fan_count && (
+                            <span>
+                              <strong>{page.fan_count.toLocaleString()}</strong>{" "}
+                              fans
+                            </span>
+                          )}
+                          {page.followers_count && (
+                            <span>
+                              <strong>
+                                {page.followers_count.toLocaleString()}
+                              </strong>{" "}
+                              followers
+                            </span>
+                          )}
+                        </div>
+                      )}
 
-                    <div className="space-y-3">
-                      <button
-                        onClick={() => getPageInsights(page.id)}
-                        disabled={insightsLoading && selectedPage === page.id}
-                        className={`w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
-                          selectedPage === page.id && pageInsights
-                            ? "bg-green-100 text-green-800 border border-green-300"
-                            : "bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
-                        }`}
-                      >
-                        <BarChart3 className="w-4 h-4" />
-                        <span>
-                          {insightsLoading && selectedPage === page.id
-                            ? "Loading Insights..."
-                            : selectedPage === page.id && pageInsights
-                            ? "Insights Loaded ✓"
-                            : "Get Insights"}
-                        </span>
-                        {insightsLoading && selectedPage === page.id && (
-                          <RefreshCw className="w-4 h-4 animate-spin" />
-                        )}
-                      </button>
-
-                      <button
-                        onClick={() => getPagePosts(page.id)}
-                        disabled={postsLoading}
-                        className={`w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
-                          pagePosts.length > 0
-                            ? "bg-green-100 text-green-800 border border-green-300"
-                            : "bg-gray-600 text-white hover:bg-gray-700 disabled:opacity-50"
-                        }`}
-                      >
-                        <FileText className="w-4 h-4" />
-                        <span>
-                          {postsLoading
-                            ? "Loading Posts..."
-                            : pagePosts.length > 0
-                            ? `${pagePosts.length} Posts Loaded ✓`
-                            : "Get Posts"}
-                        </span>
-                        {postsLoading && (
-                          <RefreshCw className="w-4 h-4 animate-spin" />
-                        )}
-                      </button>
-                    </div>
-
-                    {/* Quick Actions */}
-                    <div className="mt-4 pt-3 border-t border-gray-200">
-                      <div className="flex space-x-2">
+                      {/* Buttons */}
+                      <div className="space-y-3">
+                        {/* Insights Button */}
                         <button
                           onClick={() => {
+                            setSelectedPage(page.id);
                             getPageInsights(page.id);
+                          }}
+                          disabled={isInsightsLoading}
+                          className={`w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
+                            insights
+                              ? "bg-green-100 text-green-800 border border-green-300"
+                              : "bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
+                          }`}
+                        >
+                          <BarChart3 className="w-4 h-4" />
+                          <span>
+                            {isInsightsLoading
+                              ? "Loading Insights..."
+                              : insights
+                              ? "Insights Loaded ✓"
+                              : "Get Insights"}
+                          </span>
+                          {isInsightsLoading && (
+                            <RefreshCw className="w-4 h-4 animate-spin" />
+                          )}
+                        </button>
+
+                        {/* Posts Button */}
+                        <button
+                          onClick={() => {
+                            setSelectedPage(page.id);
                             getPagePosts(page.id);
                           }}
-                          disabled={loading || insightsLoading || postsLoading}
-                          className="flex-1 text-xs text-blue-600 hover:text-blue-800 font-medium disabled:opacity-50 transition-colors"
+                          disabled={isPostsLoading}
+                          className={`w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
+                            posts.length > 0
+                              ? "bg-green-100 text-green-800 border border-green-300"
+                              : "bg-gray-600 text-white hover:bg-gray-700 disabled:opacity-50"
+                          }`}
                         >
-                          Load All Data
-                        </button>
-                        <button
-                          onClick={() => {
-                            if (selectedPage === page.id) {
-                              setSelectedPage(null);
-                              setPageInsights(null);
-                              setPagePosts([]);
-                            }
-                          }}
-                          className="text-xs text-gray-500 hover:text-gray-700 font-medium transition-colors"
-                        >
-                          Clear
+                          <FileText className="w-4 h-4" />
+                          <span>
+                            {isPostsLoading
+                              ? "Loading Posts..."
+                              : posts.length > 0
+                              ? `${posts.length} Posts Loaded ✓`
+                              : "Get Posts"}
+                          </span>
+                          {isPostsLoading && (
+                            <RefreshCw className="w-4 h-4 animate-spin" />
+                          )}
                         </button>
                       </div>
+
+                      {/* Quick Actions */}
+                      <div className="mt-4 pt-3 border-t border-gray-200">
+                        <div className="flex space-x-2">
+                          <button
+                            onClick={() => {
+                              setSelectedPage(page.id);
+                              getPageInsights(page.id);
+                              getPagePosts(page.id);
+                            }}
+                            disabled={isInsightsLoading || isPostsLoading}
+                            className="flex-1 text-xs text-blue-600 hover:text-blue-800 font-medium disabled:opacity-50 transition-colors"
+                          >
+                            {isInsightsLoading || isPostsLoading ? (
+                              <span className="flex items-center space-x-1">
+                                <RefreshCw className="w-3 h-3 animate-spin" />
+                                <span>Loading...</span>
+                              </span>
+                            ) : (
+                              "Load All Data"
+                            )}
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              setPageInsights((prev) => ({
+                                ...prev,
+                                [page.id]: null,
+                              }));
+                              setPagePosts((prev) => ({
+                                ...prev,
+                                [page.id]: [],
+                              }));
+                            }}
+                            className="text-xs text-gray-500 hover:text-gray-700 font-medium transition-colors"
+                          >
+                            Clear
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}
@@ -1247,7 +1352,6 @@ function FacebookIntegrationContent() {
     </div>
   );
 }
-
 // Main export component with Suspense boundary
 export default function FacebookIntegration() {
   return (

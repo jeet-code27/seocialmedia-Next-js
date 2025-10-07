@@ -1,6 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import { CheckCircle, AlertCircle, RefreshCw } from 'lucide-react';
+import { redirect } from 'next/navigation';
 
 const FacebookCallback = () => {
   const [status, setStatus] = useState('processing'); // processing, success, error
