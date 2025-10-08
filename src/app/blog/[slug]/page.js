@@ -40,7 +40,7 @@ export async function generateMetadata({ params }) {
     // ✅ Canonical URL
     alternates: {
       canonical:
-        blog.canonicalUrl || `https://www.seocialmedia.in/blog/${blog.slug}`,
+        blog.canonicalUrl || `https://seocialmedia.in/blog/${blog.slug}`,
     },
 
     // ✅ Keywords
@@ -67,7 +67,7 @@ export async function generateMetadata({ params }) {
         "@type": "Article",
         headline: blog.title,
         description: blog.metaDescription || blog.excerpt,
-        image: `https://www.seocialmedia.in${blog.image}`,
+        image: `https://seocialmedia.in${blog.image}`,
         author: {
           "@type": "Person",
           name: blog.author || "Gaurnish Health",
@@ -77,14 +77,14 @@ export async function generateMetadata({ params }) {
           name: "Gaurnish Health",
           logo: {
             "@type": "ImageObject",
-            url: "https://www.seocialmedia.in/logo.png",
+            url: "https://seocialmedia.in/logo.png",
           },
         },
         datePublished: blog.date,
         dateModified: blog.date,
         mainEntityOfPage: {
           "@type": "WebPage",
-          "@id": `https://www.seocialmedia.in/blog/${blog.slug}`,
+          "@id": `https://seocialmedia.in/blog/${blog.slug}`,
         },
       }),
     },
@@ -94,10 +94,10 @@ export async function generateMetadata({ params }) {
       title: blog.title,
       description: blog.metaDescription || blog.excerpt,
       type: "article",
-      url: `https://www.seocialmedia.in/blog/${blog.slug}`,
+      url: `https://seocialmedia.in/blog/${blog.slug}`,
       images: [
         {
-          url: `https://www.seocialmedia.in${blog.image}`,
+          url: `https://seocialmedia.in${blog.image}`,
           width: 1200,
           height: 630,
           alt: blog.alt || blog.title,
@@ -113,7 +113,7 @@ export async function generateMetadata({ params }) {
       card: "summary_large_image",
       title: blog.title,
       description: blog.metaDescription || blog.excerpt,
-      images: [`https://www.seocialmedia.in${blog.image}`],
+      images: [`https://seocialmedia.in${blog.image}`],
       creator: "@seocialmedia",
     },
   };
