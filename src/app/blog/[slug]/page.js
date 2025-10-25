@@ -205,13 +205,13 @@ export default async function SingleBlogPage({ params }) {
   return (
     <article className="min-h-screen bg-gray-50">
       {/* Hero section with image */}
-    <div className=" mt-10 relative   h-[300px] sm:h-[20px]    lg:h-[360px] max-w-6xl mx-auto">
+    <div className=" mt-10 relative   h-[300px] sm:h-[20px]    lg:h-[420px] max-w-6xl mx-auto">
         <Image
           src={blog.image || "/images/placeholder.jpg"}
           alt={blog.alt || blog.title}
           fill
           priority
-          className="object-cover rounded-lg"
+          className="object-fit rounded-lg"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70 rounded-lg"></div>
         <div className="absolute bottom-0 left-0 right-0 p-3 md:p-12 text-center">

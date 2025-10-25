@@ -56,11 +56,12 @@ export default async function sitemap() {
     "/blog/top-app-development-company-jaipur-seocial-media",
     "/blog/top-10-website-development-companies-jaipur-2025",
     "/blog/social-media-optimization-checklist-2025",
+    "/blog/seo-services-jaipur-write-content-ranks",
   ].map((post) => ({
     url: `${URL}${post}`,
     lastModified: new Date().toISOString(),
     changeFrequency: "weekly",
-    priority: 0.8,
+    priority: 0.95,
   }));
 
   return [...routes, ...blogPosts];
