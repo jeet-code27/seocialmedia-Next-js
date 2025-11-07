@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
- 
+
 import Link from "next/link";
- 
+
 
 import {
   Code,
@@ -200,36 +200,47 @@ const WebDevelopment = () => {
 
   return (
     <>
-     
+
 
       <section className="bg-gradient-to-br from-indigo-50 via-white to-purple-50">
         <div className="px-4 py-16 md:px-16 lg:px-24">
           <div className="max-w-7xl mx-auto">
             {/* Hero Section */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-center"
-            >
-              <h1 className="inline-block px-4 py-1 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-sm rounded-full font-medium">
-                Best Web Development Services in Jaipur
-              </h1>
-              <h1 className="mt-6 text-4xl pb-3 font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent md:text-6xl">
-                Professional Web Solutions
-              </h1>
-              <p className="mt-6 text-gray-600 text-lg md:text-xl max-w-3xl mx-auto">
-                Web design & development services involve designing, building,
-                regularly supporting and gradually evolving different types of
-                websites.
-              </p>
-              <Link
-                href="/contact"
-                className="inline-block mt-8 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium rounded-lg hover:opacity-90 transition-opacity duration-300 shadow-lg"
-              >
-                Contact Us Now
-              </Link>
-            </motion.div>
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5 }}
+  className="text-center"
+>
+  {/* H1 – Sabse Upar, Sabse Largest */}
+  <h1 className="text-5xl md:text-7xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 
+                 bg-clip-text text-transparent leading-tight max-w-4xl mx-auto mt-4">
+    Best Web Development Services in Jaipur 
+  </h1>
+
+  {/* H2 Badge – Thoda Chhota */}
+  <h2 className="inline-block mt-6 px-6 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 
+                 text-white text-sm md:text-base rounded-full font-medium shadow-md">
+    Professional Web Solutions
+  </h2>
+
+  {/* Description */}
+  <p className="mt-6 text-gray-600 text-lg md:text-xl max-w-3xl mx-auto">
+    Web design & development services involve designing, building, regularly supporting,
+    and gradually evolving different types of websites.
+  </p>
+
+  {/* CTA Button */}
+  <Link
+    href="/contact"
+    className="inline-block mt-8 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 
+               text-white font-semibold rounded-lg hover:scale-[1.03] transition-transform duration-300 shadow-lg"
+  >
+    Contact Us Now
+  </Link>
+</motion.div>
+
+
 
             {/* Technologies Grid */}
             <div className="mt-24 grid gap-6 md:grid-cols-2 lg:grid-cols-4">

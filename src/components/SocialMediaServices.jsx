@@ -198,17 +198,21 @@ const SocialMediaServices = () => {
           <div className="max-w-7xl mx-auto">
             {/* Hero Section */}
             <div className="text-center">
-              <h1 className="inline-block px-4 py-1 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-sm rounded-full font-medium">
-                Best Social Media Marketing Company in Jaipur
-              </h1>
-              <h2 className="mt-6 text-4xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent md:text-6xl">
-                Transform Your Social Media Presence
-              </h2>
-              <p className="mt-6 text-gray-600 text-lg md:text-xl max-w-3xl mx-auto">
-                Drive engagement, build meaningful connections, and achieve measurable results with our comprehensive social media marketing solutions
-              </p>
-            </div>
+            {/* H1 – Sabse Large */}
+            <h1 className="mt-2 text-5xl md:text-7xl font-extrabold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
+              Best Social Media Marketing Company in Jaipur
+            </h1>
 
+            {/* H2 – Thoda Chhota */}
+            <h2 className="mt-6 text-2xl md:text-4xl font-bold text-gray-800">
+              Transform Your Bussiness From Social Media Presence
+            </h2>
+
+            {/* Paragraph – Normal */}
+            <p className="mt-4 text-gray-600 text-base md:text-lg max-w-3xl mx-auto">
+              Drive engagement, build meaningful connections, and achieve measurable results with our comprehensive social media marketing solutions
+            </p>
+          </div>
             {/* Stats Section */}
             <div className="mt-16 grid grid-cols-2 gap-8 md:grid-cols-4">
               {stats.map((stat) => (

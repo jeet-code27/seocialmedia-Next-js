@@ -235,22 +235,24 @@ const GoogleServicesAjmer = () => {
         <div className="px-4 py-16 md:px-16 lg:px-24">
           <div className="max-w-7xl mx-auto">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-center relative"
-            >
-              <h1 className="inline-block px-6 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-sm rounded-full font-medium shadow-lg">
-                Top Google Services Agency in Ajmer
-              </h1>
-              <h2 className="mt-6 pb-3 text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent md:text-7xl">
-                Elevate Your Digital Presence
-              </h2>
-              <p className="mt-6 text-gray-600 text-xl md:text-2xl max-w-3xl mx-auto">
-                Harness the power of Google Business Profile and Google Ads to
-                drive business growth
-              </p>
-            </motion.div>
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5 }}
+  className="text-center relative mb-16 mt-10"
+>
+  <h1 className="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent drop-shadow-lg">
+    Top Google Services Agency in Ajmer
+  </h1>
+
+  <h2 className="mt-4 pb-2 text-3xl md:text-4xl font-semibold text-gray-800">
+    Elevate Your Digital Presence
+  </h2>
+
+  <p className="mt-4 text-gray-600 text-lg md:text-xl max-w-3xl mx-auto">
+    Harness the power of Google Business Profile and Google Ads to drive business growth
+  </p>
+</motion.div>
+
 
             {/* Technologies Grid */}
             <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4">

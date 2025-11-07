@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useState } from 'react';
- 
+
 import Link from 'next/link';
-import { 
-  Video, 
-  Edit, 
-  Film, 
-  Users, 
-  BarChart2, 
-  Lightbulb, 
+import {
+  Video,
+  Edit,
+  Film,
+  Users,
+  BarChart2,
+  Lightbulb,
   Award,
   CheckCircle,
   Clock,
@@ -46,7 +46,7 @@ const VideoEditing = () => {
   const toggleFAQ = (index) => {
     setOpenFAQ(openFAQ === index ? null : index);
   };
-  
+
   const faqs = [
     {
       question: "What types of videos do you specialize in editing?",
@@ -71,50 +71,50 @@ const VideoEditing = () => {
   ];
 
   const features = [
-    { 
-      name: "Corporate Videos", 
+    {
+      name: "Corporate Videos",
       category: "Professional",
       description: "Engaging videos that showcase your company's vision, culture, and services to a professional audience.",
       icon: <Film className="w-6 h-6 text-white" />,
       gradient: "from-blue-500 to-cyan-500"
     },
-    { 
-      name: "Social Media Content", 
+    {
+      name: "Social Media Content",
       category: "Digital Marketing",
       description: "Short, dynamic videos optimized for platforms like Instagram, Facebook, and TikTok to boost engagement and reach.",
       icon: <Users className="w-6 h-6 text-white" />,
       gradient: "from-purple-500 to-pink-500"
     },
-    { 
-      name: "Product Demos", 
+    {
+      name: "Product Demos",
       category: "Sales & Marketing",
       description: "Informative and visually appealing videos that highlight your product's features and benefits to potential customers.",
       icon: <Video className="w-6 h-6 text-white" />,
       gradient: "from-green-500 to-emerald-500"
     },
-    { 
-      name: "Event Highlights", 
+    {
+      name: "Event Highlights",
       category: "Promotional",
       description: "Captivating recap videos of your events, perfect for sharing on social media and attracting future attendees.",
       icon: <Award className="w-6 h-6 text-white" />,
       gradient: "from-yellow-500 to-orange-500"
     },
-    { 
-      name: "Testimonial Videos", 
+    {
+      name: "Testimonial Videos",
       category: "Trust Building",
       description: "Authentic customer testimonial videos that build trust and credibility for your brand.",
       icon: <CheckCircle className="w-6 h-6 text-white" />,
       gradient: "from-indigo-500 to-purple-500"
     },
-    { 
-      name: "Training Videos", 
+    {
+      name: "Training Videos",
       category: "Education",
       description: "Educational videos and tutorials that simplify complex information for employees or customers.",
       icon: <Lightbulb className="w-6 h-6 text-white" />,
       gradient: "from-red-500 to-pink-500"
     },
-    { 
-      name: "YouTube Content", 
+    {
+      name: "YouTube Content",
       category: "Content Creation",
       description: "Expert editing for long-form YouTube videos, including intros, outros, and sound design.",
       icon: <BarChart2 className="w-6 h-6 text-white" />,
@@ -165,7 +165,7 @@ const VideoEditing = () => {
 
   return (
     <>
-     
+
 
       <section className="bg-gradient-to-br from-blue-50 via-white to-purple-50">
         <div className="px-4 py-16 md:px-16 lg:px-24">
@@ -177,16 +177,26 @@ const VideoEditing = () => {
               transition={{ duration: 0.5 }}
               className="text-center"
             >
-              <h1 className="inline-block px-4 py-1 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm rounded-full font-medium">
+              {/* H1 – Sabse Upar & Sabse Bada */}
+              <h1 className="text-5xl md:text-7xl font-extrabold 
+                 bg-gradient-to-r from-blue-600 to-purple-600 
+                 bg-clip-text text-transparent leading-tight">
                 Professional Video Editing Services
               </h1>
-              <h2 className="mt-6 text-4xl pb-3 font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent md:text-6xl">
+
+              {/* H2 – Thoda Chhota */}
+              <h2 className="mt-4 text-2xl md:text-4xl font-semibold 
+                 text-blue-700">
                 Creative Storytelling Through Video
               </h2>
-              <p className="mt-6 text-gray-600 text-lg md:text-xl max-w-3xl mx-auto">
-                Transform your raw footage into polished, professional videos that captivate your audience and elevate your brand identity.
+
+              {/* Paragraph – Slightly Smaller */}
+              <p className="mt-6 text-gray-600 text-base md:text-lg max-w-3xl mx-auto">
+                Transform your raw footage into polished, professional videos that captivate your audience
+                and elevate your brand identity.
               </p>
             </motion.div>
+
 
             {/* Features Grid */}
             <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -313,10 +323,9 @@ const VideoEditing = () => {
                           )}
                         </div>
                       </button>
-                      
-                      <div className={`overflow-hidden transition-all duration-300 ${
-                        openFAQ === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                      }`}>
+
+                      <div className={`overflow-hidden transition-all duration-300 ${openFAQ === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                        }`}>
                         <div className="px-6 py-5 bg-white border-t border-gray-100">
                           <p className="text-gray-700 leading-relaxed">
                             {faq.answer}

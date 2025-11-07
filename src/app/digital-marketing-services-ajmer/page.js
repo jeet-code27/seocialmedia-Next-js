@@ -10,13 +10,13 @@ export const metadata = {
   publisher: "Mudit Mathur",
   robots: "index, follow",
   alternates: {
-    canonical: "https://seocialmedia.in/digital-markting-services-ajmer",
+    canonical: "https://seocialmedia.in/digital-marketing-services-ajmer",
   },
   openGraph: {
     title: "Digital Marketing Services in Ajmer | SEOcial Media Solutions",
     description:
       "Get expert digital marketing services in Ajmer including SEO, social media, PPC, and content marketing to boost your business online.",
-    url: "https://seocialmedia.in/digital-markting-services-ajmer",
+    url: "https://seocialmedia.in/digital-marketing-services-ajmer",
     siteName: "SEOcial Media Solutions",
     images: [
       {

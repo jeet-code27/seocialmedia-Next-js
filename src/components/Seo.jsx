@@ -249,17 +249,20 @@ const Seo = () => {
       <div className="px-4 py-16 md:px-16 lg:px-24">
         <div className="max-w-7xl mx-auto">
           {/* Hero Section */}
-          <div className="text-center relative mb-16">
-            <span className="inline-block px-6 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-sm rounded-full font-medium shadow-lg">
-              <h1>Best SEO Company in Jaipur</h1>
-            </span>
-            <h2 className="mt-6 pb-3 text-5xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent md:text-7xl">
-              Turbocharge Your Web Traffic
-            </h2>
-            <p className="mt-6 text-gray-600 text-xl md:text-2xl max-w-3xl mx-auto">
-              Drive sustainable growth through our data-driven SEO strategies
-            </p>
-          </div>
+          <div className="text-center relative mb-16 mt-10">
+  <h1 className="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent drop-shadow-lg">
+    Best SEO Company in Jaipur
+  </h1>
+
+  <h2 className="mt-4 pb-2 text-3xl md:text-4xl font-semibold text-gray-800">
+    Turbocharge Your Web Traffic
+  </h2>
+
+  <p className="mt-4 text-gray-600 text-lg md:text-xl max-w-3xl mx-auto">
+    Drive sustainable growth through our data-driven SEO strategies
+  </p>
+</div>
+
 
           {/* Technologies Grid */}
           <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4">

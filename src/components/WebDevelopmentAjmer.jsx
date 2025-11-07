@@ -21,7 +21,7 @@ import { motion } from "framer-motion";
 import WebIndustriesSection from "./WebIndustriesSection";
 import WebIntroSectionAjmer from './WebIntroSectionaAjmer';
 import WorkingProcessimgMedia from "./WorkingProcessimgMedia";
- 
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -198,18 +198,26 @@ const WebDevelopmentAjmer = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-center"
+              className="text-center relative mb-16"
             >
-              <h1 className="inline-block px-4 py-1 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-sm rounded-full font-medium">
+              {/* ✅ H1 – BIG Main Heading */}
+              <h1 className="mt-6 text-5xl md:text-7xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent leading-tight drop-shadow-lg">
                 Best Web Development Services in Ajmer
               </h1>
-              <h1 className="mt-6 text-4xl pb-3 font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent md:text-6xl">
+
+              {/* ✅ H2 – Small Badge below */}
+              <h2 className="inline-block mt-4 px-6 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-sm md:text-base rounded-full font-semibold shadow-md">
                 Professional Web Solutions for Ajmer Businesses
-              </h1>
+              </h2>
+
+              {/* Description */}
               <p className="mt-6 text-gray-600 text-lg md:text-xl max-w-3xl mx-auto">
-                We offer cutting-edge web design & development services in Ajmer—crafting responsive, modern, and SEO-friendly websites tailored to your business needs.
+                We offer cutting-edge web design & development services in Ajmer—crafting responsive,
+                modern, and SEO-friendly websites tailored to your business needs.
               </p>
             </motion.div>
+
+
 
             {/* Technologies Grid */}
             <div className="mt-24 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -239,8 +247,8 @@ const WebDevelopmentAjmer = () => {
               ))}
             </div>
 
-            <WorkingProcessimgMedia/>
-            <WebIntroSectionAjmer/>
+            <WorkingProcessimgMedia />
+            <WebIntroSectionAjmer />
 
             {/* Process Section */}
             <motion.div
@@ -438,8 +446,8 @@ const WebDevelopmentAjmer = () => {
           </div>
         </div>
       </section>
-    </>
-  );
+    </>
+  );
 };
 
 export default WebDevelopmentAjmer;

@@ -210,27 +210,41 @@ const EcommerceListingService = () => {
     <section className="bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <div className="px-4 py-16 md:px-16 lg:px-24">
         <div className="max-w-7xl mx-auto">
-          
+
           {/* Hero Section */}
           <div className="text-center relative mb-16">
-            <span className="inline-block px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm rounded-full font-medium shadow-lg">
-              <h1>Multi-Platform E-commerce Listing Service</h1>
-            </span>
-            <h2 className="mt-6 pb-3 text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent md:text-7xl">
+            {/* H1 – Sabse Upar & Sabse Bada */}
+            <h1 className="text-5xl md:text-7xl font-extrabold 
+                 bg-gradient-to-r from-blue-600 to-purple-600 
+                 bg-clip-text text-transparent leading-tight">
+              Multi-Platform E-commerce Listing Service
+            </h1>
+
+            {/* H2 – Thoda Chhota */}
+            <h2 className="inline-block mt-6 px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 
+                 text-white text-sm md:text-base rounded-full font-medium shadow-lg">
               List Your Products Everywhere
             </h2>
-            <p className="mt-6 text-gray-600 text-xl md:text-2xl max-w-3xl mx-auto">
+
+            {/* Paragraph */}
+            <p className="mt-6 text-gray-600 text-lg md:text-xl max-w-3xl mx-auto">
               Professional product listing across Amazon, Flipkart, eBay, Etsy and 50+ marketplaces
             </p>
+
+            {/* CTA Button */}
             <div className="mt-8 flex justify-center">
               <Link href="/contact">
-                <button className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-8 py-4 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-600 transition-all duration-300 flex items-center space-x-2">
+                <button className="bg-gradient-to-r from-blue-600 to-purple-600 
+                        text-white px-8 py-4 rounded-lg font-semibold 
+                        hover:opacity-90 transition-all duration-300 
+                        flex items-center space-x-2 shadow-lg">
                   <span>Get Started Today</span>
                   <ArrowRight className="w-5 h-5" />
                 </button>
               </Link>
             </div>
           </div>
+
 
           {/* Platforms Grid */}
           <div className="mb-16">
@@ -361,7 +375,7 @@ const EcommerceListingService = () => {
               </h3>
               <p className="text-xl text-gray-600">Everything you need to know about our listing services</p>
             </div>
-            
+
             <div className="max-w-4xl mx-auto">
               {faqs.map((faq, index) => (
                 <div key={index} className="mb-4">
@@ -381,7 +395,7 @@ const EcommerceListingService = () => {
                         )}
                       </div>
                     </button>
-                    
+
                     <motion.div
                       initial={false}
                       animate={{
@@ -419,7 +433,7 @@ const EcommerceListingService = () => {
                     <span>Start Listing Now</span>
                   </button>
                 </Link>
-               
+
               </div>
             </div>
           </div>
