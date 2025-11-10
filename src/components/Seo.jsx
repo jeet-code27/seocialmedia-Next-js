@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
- 
+
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -122,7 +122,7 @@ const Seo = () => {
       image: "/images/seo.jpg"
     }
   ];
-  
+
   const process = [
     {
       number: "01",
@@ -244,24 +244,24 @@ const Seo = () => {
   ];
   return (
     <section className="bg-gradient-to-br from-amber-50 via-white to-orange-50">
-      
+
 
       <div className="px-4 py-16 md:px-16 lg:px-24">
         <div className="max-w-7xl mx-auto">
           {/* Hero Section */}
           <div className="text-center relative mb-16 mt-10">
-  <h1 className="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent drop-shadow-lg">
-    Best SEO Company in Jaipur
-  </h1>
+            <h1 className="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent drop-shadow-lg">
+              Best SEO Company in Jaipur
+            </h1>
 
-  <h2 className="mt-4 pb-2 text-3xl md:text-4xl font-semibold text-gray-800">
-    Turbocharge Your Web Traffic
-  </h2>
+            <h2 className="mt-4 pb-2 text-3xl md:text-4xl font-semibold text-gray-800">
+              Turbocharge Your Web Traffic
+            </h2>
 
-  <p className="mt-4 text-gray-600 text-lg md:text-xl max-w-3xl mx-auto">
-    Drive sustainable growth through our data-driven SEO strategies
-  </p>
-</div>
+            <p className="mt-4 text-gray-600 text-lg md:text-xl max-w-3xl mx-auto">
+              Drive sustainable growth through our data-driven SEO strategies
+            </p>
+          </div>
 
 
           {/* Technologies Grid */}
@@ -447,7 +447,7 @@ const Seo = () => {
               </h2>
               <p className="text-xl text-gray-600">Everything you need to know about our SEO services</p>
             </div>
-            
+
             <div className="max-w-4xl mx-auto">
               {faqs.map((faq, index) => (
                 <div key={index} className="mb-4">
@@ -467,7 +467,7 @@ const Seo = () => {
                         )}
                       </div>
                     </button>
-                    
+
                     <motion.div
                       initial={false}
                       animate={{
@@ -490,7 +490,7 @@ const Seo = () => {
               ))}
             </div>
           </div>
-          
+
           {/* CTA Section */}
           <div className="text-center py-16">
             <div className="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-12 text-white">

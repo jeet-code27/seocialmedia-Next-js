@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import emailjs from "@emailjs/browser";
 import {
   Briefcase,
   GraduationCap,
@@ -9,7 +8,6 @@ import {
   MapPin,
   ExternalLink,
 } from "lucide-react";
-import { motion } from "framer-motion";
 
 const CareerPage = () => {
   const positions = [
@@ -71,166 +69,174 @@ const CareerPage = () => {
 
   const [showForm, setShowForm] = useState(false);
   const [formSuccess, setFormSuccess] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: ''
+  });
+  const [errors, setErrors] = useState({});
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handlePhoneKeyPress = (e) => {
+    if (!/[0-9]/.test(e.key)) {
+      e.preventDefault();
+    }
+  };
+
+  const handleSubmit = () => {
+    setErrors({});
+
+    const name = formData.name.trim();
+    const email = formData.email.trim();
+    const phone = formData.phone.trim();
+    const subject = formData.subject.trim();
+    const message = formData.message.trim();
+
+    let valid = true;
+    const newErrors = {};
+
+    if (!name) {
+      newErrors.name = "Please enter your name.";
+      valid = false;
+    }
+    if (!email) {
+      newErrors.email = "Please enter your email.";
+      valid = false;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Please enter a valid email address.";
+      valid = false;
+    }
+    if (!phone) {
+      newErrors.phone = "Please enter your phone number.";
+      valid = false;
+    } else if (!/^\d{10,}$/.test(phone)) {
+      newErrors.phone = "Phone number must be at least 10 digits.";
+      valid = false;
+    }
+    if (!subject) {
+      newErrors.subject = "Please enter a subject.";
+      valid = false;
+    }
+    if (!message) {
+      newErrors.message = "Please enter a message.";
+      valid = false;
+    }
+
+    if (!valid) {
+      setErrors(newErrors);
+      return;
+    }
+
+    // Simulated email send
+    console.log("Form submitted:", { name, email, phone, subject, message });
+    setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+    setShowForm(false);
+    setFormSuccess(true);
+    setTimeout(() => setFormSuccess(false), 3000);
+  };
 
   const ContactUs = ({ onClose }) => {
-    const form = useRef();
-    const [errors, setErrors] = useState({});
-
-    const sendEmail = (e) => {
-      e.preventDefault();
-      setErrors({});
-
-      const name = form.current.name.value.trim();
-      const email = form.current.email.value.trim();
-      const phone = form.current.phone.value.trim();
-      const subject = form.current.subject.value.trim();
-      const message = form.current.message.value.trim();
-
-      let valid = true;
-      const newErrors = {};
-
-      if (!name) {
-        newErrors.name = "Please enter your name.";
-        valid = false;
-      }
-      if (!email) {
-        newErrors.email = "Please enter your email.";
-        valid = false;
-      } else if (!/\S+@\S+\.\S+/.test(email)) {
-        newErrors.email = "Please enter a valid email address.";
-        valid = false;
-      }
-      if (!phone) {
-        newErrors.phone = "Please enter your phone number.";
-        valid = false;
-      } else if (!/^\d{10,}$/.test(phone)) {
-        newErrors.phone = "Phone number must be at least 10 digits.";
-        valid = false;
-      }
-      if (!subject) {
-        newErrors.subject = "Please enter a subject.";
-        valid = false;
-      }
-      if (!message) {
-        newErrors.message = "Please enter a message.";
-        valid = false;
-      }
-
-      if (!valid) {
-        setErrors(newErrors);
-        return;
-      }
-
-      const finalMessage = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nSubject: ${subject}\nMessage: ${message}`;
-
-      emailjs
-        .send(
-          "service_axmf7gf",
-          "template_y4bn1hr",
-          { message: finalMessage },
-          {
-            publicKey: "Jz3fmNPip850w3-JO",
-          }
-        )
-        .then(() => {
-          form.current.reset();
-          onClose();
-          setFormSuccess(true);
-          setTimeout(() => setFormSuccess(false), 3000);
-        })
-        .catch((error) => {
-          console.error("FAILED...", error.text);
-        });
-    };
-
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+      <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 p-4">
         <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full relative">
           <button
             onClick={onClose}
-            className="absolute top-2 right-2 text-gray-500 hover:text-red-600"
+            className="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-2xl"
           >
             ✕
           </button>
           <h1 className="text-2xl font-bold text-center mb-4">Contact Us</h1>
-          <form ref={form} onSubmit={sendEmail} className="space-y-4">
+          <div className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-gray-700">
+              <label htmlFor="name" className="block text-gray-700 mb-1">
                 Name
               </label>
               <input
                 type="text"
                 name="name"
+                value={formData.name}
+                onChange={handleInputChange}
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               />
               {errors.name && (
-                <p className="text-red-500 text-sm">{errors.name}</p>
+                <p className="text-red-500 text-sm mt-1">{errors.name}</p>
               )}
             </div>
             <div>
-              <label htmlFor="email" className="block text-gray-700">
+              <label htmlFor="email" className="block text-gray-700 mb-1">
                 Email
               </label>
               <input
                 type="email"
                 name="email"
+                value={formData.email}
+                onChange={handleInputChange}
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               />
               {errors.email && (
-                <p className="text-red-500 text-sm">{errors.email}</p>
+                <p className="text-red-500 text-sm mt-1">{errors.email}</p>
               )}
             </div>
             <div>
-              <label htmlFor="phone" className="block text-gray-700">
+              <label htmlFor="phone" className="block text-gray-700 mb-1">
                 Phone Number
               </label>
               <input
                 type="tel"
                 name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
                 maxLength={15}
-                onKeyPress={(e) => {
-                  if (!/[0-9]/.test(e.key)) {
-                    e.preventDefault();
-                  }
-                }}
+                onKeyPress={handlePhoneKeyPress}
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               />
               {errors.phone && (
-                <p className="text-red-500 text-sm">{errors.phone}</p>
+                <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
               )}
             </div>
             <div>
-              <label htmlFor="subject" className="block text-gray-700">
+              <label htmlFor="subject" className="block text-gray-700 mb-1">
                 Subject
               </label>
               <input
                 type="text"
                 name="subject"
+                value={formData.subject}
+                onChange={handleInputChange}
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               />
               {errors.subject && (
-                <p className="text-red-500 text-sm">{errors.subject}</p>
+                <p className="text-red-500 text-sm mt-1">{errors.subject}</p>
               )}
             </div>
             <div>
-              <label htmlFor="message" className="block text-gray-700">
+              <label htmlFor="message" className="block text-gray-700 mb-1">
                 Message
               </label>
               <textarea
                 name="message"
+                value={formData.message}
+                onChange={handleInputChange}
+                rows={4}
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               />
               {errors.message && (
-                <p className="text-red-500 text-sm">{errors.message}</p>
+                <p className="text-red-500 text-sm mt-1">{errors.message}</p>
               )}
             </div>
             <button
-              type="submit"
+              onClick={handleSubmit}
               className="w-full bg-gradient-to-r from-purple-600 to-cyan-500 text-white rounded-md p-2 hover:scale-105 transition-transform duration-300"
             >
               Send
             </button>
-          </form>
+          </div>
         </div>
       </div>
     );
@@ -238,15 +244,10 @@ const CareerPage = () => {
 
   return (
     <>
-      <section className="bg-gradient-to-br from-indigo-50 via-white to-purple-50">
-        <div className="px-4 py-16 md:px-16 lg:px-24">
-          <div className="max-w-7xl  mx-auto text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="flex gap-2 flex-col w-full justify-center items-center"
-            >
+      <section className="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen flex items-center justify-center">
+        <div className="px-4 py-16 md:px-16 lg:px-24 w-full">
+          <div className="max-w-7xl mx-auto text-center">
+            <div className="flex gap-2 flex-col w-full justify-center items-center">
               <span className="inline-block px-4 py-1 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-sm rounded-full font-medium">
                 Join Our Team
               </span>
@@ -258,14 +259,13 @@ const CareerPage = () => {
                 marketing. We offer competitive benefits and a dynamic work
                 environment.
               </p>
-            </motion.div>
+            </div>
 
-            <motion.div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {positions.map((position, index) => (
-                <motion.div
+                <div
                   key={index}
-                  whileHover={{ y: -5 }}
-                  className="relative p-6 bg-white rounded-xl shadow-lg"
+                  className="relative p-6 bg-white rounded-xl shadow-lg hover:-translate-y-1 transition-transform duration-300"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 opacity-5 rounded-xl" />
                   <div className="relative space-y-4">
@@ -294,17 +294,16 @@ const CareerPage = () => {
                     <p className="text-gray-600 text-left">
                       {position.description}
                     </p>
-                    <motion.button
+                    <button
                       onClick={() => setShowForm(true)}
-                      whileTap={{ scale: 0.98 }}
                       className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-2 px-4 rounded-lg hover:opacity-90 transition-opacity duration-300 flex items-center justify-center gap-2"
                     >
                       Apply Now <ExternalLink className="w-4 h-4" />
-                    </motion.button>
+                    </button>
                   </div>
-                </motion.div>
+                </div>
               ))}
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>

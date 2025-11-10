@@ -1,6 +1,7 @@
 import React from 'react';
-import { FaBullhorn, FaUsers, FaCloud, FaChartLine, FaArrowRight } from 'react-icons/fa';
+import { FaBullhorn, FaUsers, FaCloud, FaChartLine } from 'react-icons/fa';
 import Image from 'next/image';
+
 const services = [
   {
     title: 'Business Marketing Strategy',
@@ -28,38 +29,39 @@ const services = [
   },
 ];
 
-
 const ServicesSectionAjmer = () => {
   return (
     <div className="bg-[#f3f5fc] py-12 px-4">
-    <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-      {services.map((service, index) => (
-        <div
-          key={index}
-          className="w-full flex flex-col lg:flex-row items-center justify-between bg-white rounded-2xl shadow-sm p-6 relative overflow-hidden"
-        >
-          {/* Image First on Small Screens */}
-          <div className="relative w-full lg:w-1/2 order-1 lg:order-2 mb-4 lg:mb-0">
-            <div className="absolute ml-auto lg:ml-6 bottom-0 lg:bottom-auto  left-1/2 lg:-left-6 lg:top-1/2 transform -translate-x-1/2   lg:-translate-y-1/2 bg-purple-700 text-white p-3 rounded-full z-10 border-4 border-white shadow-md">
-              {service.icon}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+        {services.map((service, index) => (
+          <div
+            key={index}
+            className="w-full flex flex-col lg:flex-row items-center justify-between bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 p-6 relative overflow-hidden"
+          >
+            {/* Image First on Small Screens */}
+            <div className="relative w-full lg:w-1/2 order-1 lg:order-2 mb-4 lg:mb-0">
+              <div className="absolute ml-auto lg:ml-6 bottom-0 lg:bottom-auto left-1/2 lg:-left-6 lg:top-1/2 transform -translate-x-1/2 lg:-translate-y-1/2 bg-purple-700 text-white p-3 rounded-full z-10 border-4 border-white shadow-md">
+                {service.icon}
+              </div>
+              <Image
+                src={service.image}
+                alt={service.title}
+                width={400}
+                height={160}
+                className="w-full h-40 object-cover rounded-xl"
+                priority={index < 2}
+              />
             </div>
-            <Image
-              src={service.image}
-              alt={service.title}
-              className="w-full h-40 object-cover rounded-xl"
-            />
+    
+            {/* Text Second on Small Screens */}
+            <div className="w-full lg:w-1/2 order-2 lg:order-1 pr-0 lg:pr-4">
+              <h3 className="text-xl font-bold text-[#2b2350] mb-2">{service.title}</h3>
+              <p className="text-gray-500 mb-4 text-sm">{service.description}</p>
+            </div>
           </div>
-  
-          {/* Text Second on Small Screens */}
-          <div className="w-full lg:w-1/2 order-2 lg:order-1 pr-0 lg:pr-4">
-            <h3 className="text-xl font-bold text-[#2b2350] mb-2">{service.title}</h3>
-            <p className="text-gray-500 mb-4 text-sm">{service.description}</p>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
-  </div>
-  
   );
 };
 

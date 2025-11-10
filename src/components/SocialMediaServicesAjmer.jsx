@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
- 
-import { 
-  Share2, 
-  BarChart2, 
-  Users, 
-  Camera, 
-  MessageCircle, 
+
+import {
+  Share2,
+  BarChart2,
+  Users,
+  Camera,
+  MessageCircle,
   TrendingUp,
   Target,
   CheckCircle,
@@ -50,52 +50,52 @@ const SocialMediaServicesAjmer = () => {
       icon: <Zap className="w-6 h-6" />
     }
   ];
-  
+
   const features = [
-    { 
-      name: "Social Strategy", 
+    {
+      name: "Social Strategy",
       category: "Planning",
       description: "Data-driven social media strategies tailored to your business goals",
       icon: <Target className="w-6 h-6 text-white" />,
       gradient: "from-pink-500 to-rose-500"
     },
-    { 
-      name: "Content Creation", 
+    {
+      name: "Content Creation",
       category: "Production",
       description: "Engaging visual and written content that resonates with your audience",
       icon: <Camera className="w-6 h-6 text-white" />,
       gradient: "from-purple-500 to-pink-500"
     },
-    { 
-      name: "Community Management", 
+    {
+      name: "Community Management",
       category: "Engagement",
       description: "Active community engagement and reputation management",
       icon: <MessageCircle className="w-6 h-6 text-white" />,
       gradient: "from-blue-500 to-indigo-500"
     },
-    { 
-      name: "Performance Analytics", 
+    {
+      name: "Performance Analytics",
       category: "Reporting",
       description: "Comprehensive analytics and ROI tracking for campaigns",
       icon: <BarChart2 className="w-6 h-6 text-white" />,
       gradient: "from-green-500 to-emerald-500"
     },
-    { 
-      name: "Influencer Marketing", 
+    {
+      name: "Influencer Marketing",
       category: "Partnerships",
       description: "Strategic influencer partnerships that amplify your reach",
       icon: <Users className="w-6 h-6 text-white" />,
       gradient: "from-yellow-500 to-orange-500"
     },
-    { 
-      name: "Growth Strategy", 
+    {
+      name: "Growth Strategy",
       category: "Optimization",
       description: "Scalable growth tactics for sustainable social media success",
       icon: <TrendingUp className="w-6 h-6 text-white" />,
       gradient: "from-red-500 to-pink-500"
     },
-    { 
-      name: "Brand Building", 
+    {
+      name: "Brand Building",
       category: "Identity",
       description: "Consistent brand messaging across all social platforms",
       icon: <Share2 className="w-6 h-6 text-white" />,
@@ -138,13 +138,13 @@ const SocialMediaServicesAjmer = () => {
 
   return (
     <div className="min-h-screen">
- 
+
       {/* Hero Section */}
       <section className="text-center py-20 bg-gradient-to-br from-pink-50 to-purple-50">
-        <h1 className="inline-block px-4 py-1 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-sm rounded-full font-medium">
+        <h1 className="mt-6 text-4xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent md:text-6xl">
           Best Social Media Marketing Company in Ajmer
         </h1>
-        <h2 className="mt-6 text-4xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent md:text-6xl">
+        <h2 className="mt-6 inline-block px-4 py-1 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-sm rounded-full font-medium">
           Transform Your Social Media Presence
         </h2>
         <p className="mt-6 text-lg md:text-xl max-w-3xl mx-auto text-gray-600">
@@ -152,7 +152,7 @@ const SocialMediaServicesAjmer = () => {
         </p>
       </section>
 
-      <SocialMediaHeroAjmer/>
+      <SocialMediaHeroAjmer />
 
       {/* Stats Section */}
       <section className="py-16">
@@ -201,7 +201,7 @@ const SocialMediaServicesAjmer = () => {
         ))}
       </div>
 
-      <ServicesSectionAjmer/>
+      <ServicesSectionAjmer />
 
       {/* FAQ Section */}
       <section className="py-16 bg-white rounded-3xl shadow-lg">
@@ -237,11 +237,10 @@ const SocialMediaServicesAjmer = () => {
                     )}
                   </div>
                 </button>
-                
+
                 <div
-                  className={`overflow-hidden transition-all duration-300 ${
-                    openFaq === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                  }`}
+                  className={`overflow-hidden transition-all duration-300 ${openFaq === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                    }`}
                 >
                   <div className="px-6 py-5 bg-white border-t border-gray-100">
                     <p className="text-gray-700 leading-relaxed">{faq.answer}</p>

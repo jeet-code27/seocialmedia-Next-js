@@ -1,14 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
- 
+
 import Image from 'next/image';
 import Link from 'next/link';
-import { 
-  Search, 
-  TrendingUp, 
-  Globe, 
-  BarChart2, 
+import {
+  Search,
+  TrendingUp,
+  Globe,
+  BarChart2,
   Link2,
   Users,
   Clock,
@@ -121,7 +121,7 @@ const SeoAjmerpage = () => {
       image: "/images/seo.jpg"
     }
   ];
-  
+
   const process = [
     {
       number: "01",
@@ -164,7 +164,7 @@ const SeoAjmerpage = () => {
       author: "Art and Craft Suppliers"
     }
   ];
-  
+
   const detailedServices = [
     {
       title: "Expertise Across Multiple Business Domains",
@@ -218,7 +218,7 @@ const SeoAjmerpage = () => {
       ]
     }
   ];
-  
+
   const growthBenefits = [
     {
       title: "Enhanced Search Visibility",
@@ -244,16 +244,16 @@ const SeoAjmerpage = () => {
 
   return (
     <section className="bg-gradient-to-br from-amber-50 via-white to-orange-50">
-    
+
 
       <div className="px-4 py-16 md:px-16 lg:px-24">
         <div className="max-w-7xl mx-auto">
           {/* Hero Section */}
           <div className="text-center relative mb-16">
-            <span className="inline-block px-6 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-sm rounded-full font-medium shadow-lg">
-              <h1>Best SEO Company in Ajmer</h1>
-            </span>
-            <h2 className="mt-6 pb-3 text-5xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent md:text-7xl">
+            <h1 className="mt-6 pb-3 text-4xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent md:text-6xl">
+              Best SEO Company in Ajmer
+            </h1>
+            <h2 className="mt-6 inline-block px-6 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-sm rounded-full font-medium shadow-lg">
               Turbocharge Your Web Traffic
             </h2>
             <p className="mt-6 text-gray-600 text-xl md:text-2xl max-w-3xl mx-auto">
@@ -444,7 +444,7 @@ const SeoAjmerpage = () => {
               </h2>
               <p className="text-xl text-gray-600">Everything you need to know about our SEO services</p>
             </div>
-            
+
             <div className="max-w-4xl mx-auto">
               {faqs.map((faq, index) => (
                 <div key={index} className="mb-4">
@@ -464,12 +464,11 @@ const SeoAjmerpage = () => {
                         )}
                       </div>
                     </button>
-                    
-                    <div className={`transition-all duration-300 ease-in-out ${
-                      openFaq === index 
-                        ? 'max-h-96 opacity-100' 
+
+                    <div className={`transition-all duration-300 ease-in-out ${openFaq === index
+                        ? 'max-h-96 opacity-100'
                         : 'max-h-0 opacity-0'
-                    } overflow-hidden`}>
+                      } overflow-hidden`}>
                       <div className="px-8 pb-6 pt-2">
                         <div className="border-t border-gray-100 pt-4">
                           <p className="text-gray-600 leading-relaxed">
@@ -483,7 +482,7 @@ const SeoAjmerpage = () => {
               ))}
             </div>
           </div>
-          
+
           {/* CTA Section */}
           <div className="text-center py-16">
             <div className="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-12 text-white">

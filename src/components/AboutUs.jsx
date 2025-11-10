@@ -127,19 +127,25 @@ const AboutUs = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-center"
+          className="text-center relative mb-16"
         >
-          <h1 className="inline-block px-4 py-1 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-sm rounded-full font-medium">
+          {/* 🔹 H1 – Big gradient title now */}
+          <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent leading-tight">
             Top Digital Marketing Agency in Jaipur
           </h1>
-          <h2 className="mt-6 pb-4 text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent md:text-6xl">
+
+          {/* 🔹 H2 – Smaller badge-style subheading */}
+          <h2 className="inline-block mt-6 px-5 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-sm sm:text-base rounded-full font-medium shadow-md">
             Transforming Digital Presence
           </h2>
-          <p className="mt-6 text-gray-600 text-lg md:text-xl max-w-3xl mx-auto">
-            Your complete digital partner for website development, SEO, social
-            media, and strategic online marketing solutions.
+
+          {/* Description */}
+          <p className="mt-6 text-gray-600 text-base sm:text-lg md:text-xl max-w-3xl mx-auto px-4">
+            Your complete digital partner for website development, SEO, social media,
+            and strategic online marketing solutions.
           </p>
         </motion.div>
+
 
         {/* Mission */}
         <div id="mission" className="mt-24">

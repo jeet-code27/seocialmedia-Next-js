@@ -189,9 +189,9 @@ export default function VideoEditingAjmer() {
             transition={{ duration: 0.5 }}
             className="text-center"
           >
-            <h1 className="inline-block px-4 py-1 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-sm rounded-full font-medium mb-4">
-              Best Video Editing Company in Ajmer
-            </h1>
+            <h1 className="mt-6 pb-3 text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent md:text-6xl">
+  Best Video Editing Company in Ajmer
+</h1>
             <h2 className="mt-6 text-4xl font-bold text-white md:text-6xl leading-tight">
               Transform Your{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-purple-300">

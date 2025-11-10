@@ -193,17 +193,21 @@ const ContentWritingServicesAjmer = () => {
     <section className="bg-gradient-to-br from-emerald-50 via-white to-teal-50">
       <div className="px-4 py-16 md:px-16 lg:px-24 max-w-7xl mx-auto">
         {/* Hero Section */}
-        <div className="text-center">
-          <h1 className="inline-block px-4 py-1 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-sm rounded-full font-medium">
+        <div className="text-center px-4 md:px-8">
+          {/* ✅ h1 — Main headline */}
+          <h1 className="mt-6 text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent leading-snug md:leading-tight">
             Top Content Writing Services in Ajmer
           </h1>
-          <h2 className="mt-6 text-4xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent md:text-6xl">
+
+          {/* ✅ h2 — Badge below (responsive size + spacing) */}
+          <h2 className="inline-block mt-5 px-5 sm:px-6 py-2 sm:py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-sm sm:text-base md:text-lg rounded-full font-semibold shadow-md">
             Expert Content Writing Services That Drive Results
           </h2>
-          <p className="mt-6 text-gray-600 text-lg md:text-xl max-w-3xl mx-auto">
+
+          {/* ✅ Description */}
+          <p className="mt-6 text-gray-600 text-base sm:text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
             Transform your digital presence with SEO-optimized, engaging content
-            that connects with your audience and drives measurable business
-            growth.
+            that connects with your audience and drives measurable business growth.
           </p>
         </div>
 
@@ -342,11 +346,10 @@ const ContentWritingServicesAjmer = () => {
                   </button>
 
                   <div
-                    className={`overflow-hidden transition-all duration-300 ${
-                      openFAQ === index
+                    className={`overflow-hidden transition-all duration-300 ${openFAQ === index
                         ? "max-h-96 opacity-100"
                         : "max-h-0 opacity-0"
-                    }`}
+                      }`}
                   >
                     <div className="px-6 py-5 bg-white border-t border-gray-100">
                       <p className="text-gray-700 leading-relaxed">
