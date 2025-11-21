@@ -58,6 +58,7 @@ export default async function sitemap() {
     "/blog/social-media-optimization-checklist-2025",
     "/blog/seo-services-jaipur-write-content-ranks",
     "/blog/how-to-rank-number-1-google-2025",
+    "/blog/ecommerce-website-cost-india",
   ].map((post) => ({
     url: `${URL}${post}`,
     lastModified: new Date().toISOString(),
