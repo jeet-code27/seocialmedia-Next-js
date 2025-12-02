@@ -59,6 +59,7 @@ export default async function sitemap() {
     "/blog/seo-services-jaipur-write-content-ranks",
     "/blog/how-to-rank-number-1-google-2025",
     "/blog/ecommerce-website-cost-india",
+    "/blog/digital-marketing-agency-for-startups-jaipur-seocial-media",
   ].map((post) => ({
     url: `${URL}${post}`,
     lastModified: new Date().toISOString(),
