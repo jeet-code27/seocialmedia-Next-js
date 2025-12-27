@@ -60,6 +60,7 @@ export default async function sitemap() {
     "/blog/how-to-rank-number-1-google-2025",
     "/blog/ecommerce-website-cost-india",
     "/blog/digital-marketing-agency-for-startups-jaipur-seocial-media",
+    "/blog/best-it-company-jaipur-software-web-digital-marketing",
   ].map((post) => ({
     url: `${URL}${post}`,
     lastModified: new Date().toISOString(),
